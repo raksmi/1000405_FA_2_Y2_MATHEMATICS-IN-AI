@@ -46,21 +46,25 @@ st.markdown("""
 
 
 /* ============================================================
-   APPLICATION BACKGROUND
+   GLOBAL BACKGROUND
    ============================================================ */
 
 .stApp{
+
     background:
+
         radial-gradient(
             circle at 78% 4%,
             rgba(159,61,93,.20),
             transparent 25%
         ),
+
         radial-gradient(
             circle at 15% 30%,
             rgba(49,91,77,.14),
             transparent 28%
         ),
+
         linear-gradient(
             135deg,
             #0f0d0e 0%,
@@ -73,41 +77,53 @@ st.markdown("""
 
 
 /* ============================================================
-   TOP SPACING
-   Keeps app below Streamlit toolbar
+   MAIN PAGE SPACING
    ============================================================ */
 
 .block-container{
+
     max-width:1580px;
-    padding:4.5rem 1.25rem 3rem;
+
+    padding:
+        4.8rem
+        1.25rem
+        3rem;
+
 }
 
 
 [data-testid="column"]{
+
     min-width:0;
+
 }
 
 
 /* ============================================================
-   PANEL SHELL
+   LEFT / RIGHT PANEL
    ============================================================ */
 
 .rail,
 .filter-panel{
 
     background:
+
         linear-gradient(
             160deg,
-            rgba(36,29,31,.96),
-            rgba(27,22,23,.96)
+            rgba(36,29,31,.97),
+            rgba(27,22,23,.97)
         );
 
-    border:1px solid var(--line);
+    border:
+        1px solid
+        var(--line);
 
     border-radius:22px;
 
     box-shadow:
-        0 20px 55px rgba(0,0,0,.28);
+        0 20px 55px
+        rgba(0,0,0,.30);
+
 }
 
 
@@ -118,16 +134,18 @@ st.markdown("""
     position:sticky;
 
     top:4.75rem;
+
 }
 
 
 /* ============================================================
-   LOGISIGHT BRAND
+   BRAND
    ============================================================ */
 
 .brand{
 
     background:
+
         linear-gradient(
             145deg,
             #5d1e35 0%,
@@ -137,7 +155,8 @@ st.markdown("""
 
     color:#fff;
 
-    border:1px solid
+    border:
+        1px solid
         rgba(200,170,115,.22);
 
     border-radius:18px;
@@ -145,9 +164,11 @@ st.markdown("""
     padding:1rem;
 
     box-shadow:
-        0 14px 30px rgba(0,0,0,.25);
+        0 14px 30px
+        rgba(0,0,0,.25);
 
     margin-bottom:1rem;
+
 }
 
 
@@ -158,6 +179,7 @@ st.markdown("""
     font-weight:900;
 
     letter-spacing:.10em;
+
 }
 
 
@@ -170,11 +192,12 @@ st.markdown("""
     opacity:.78;
 
     margin-top:.2rem;
+
 }
 
 
 /* ============================================================
-   SECTION LABELS
+   SECTION HEADINGS
    ============================================================ */
 
 .rail-heading{
@@ -190,11 +213,12 @@ st.markdown("""
     letter-spacing:.16em;
 
     margin:.95rem 0 .5rem;
+
 }
 
 
 /* ============================================================
-   GUIDE
+   GUIDE CARD
    ============================================================ */
 
 .guide{
@@ -208,11 +232,14 @@ st.markdown("""
     background:
         rgba(255,255,255,.025);
 
-    border:1px solid #342b2d;
+    border:
+        1px solid
+        #342b2d;
 
     border-radius:14px;
 
     padding:.8rem;
+
 }
 
 
@@ -225,6 +252,7 @@ st.markdown("""
     padding:1rem;
 
     margin-bottom:.75rem;
+
 }
 
 
@@ -235,6 +263,7 @@ st.markdown("""
     font-size:1.02rem;
 
     font-weight:850;
+
 }
 
 
@@ -245,6 +274,7 @@ st.markdown("""
     font-size:.72rem;
 
     margin:.15rem 0 .8rem;
+
 }
 
 
@@ -254,9 +284,13 @@ st.markdown("""
 
 .hero{
 
-    padding:1.85rem 2rem;
+    padding:
+        1.85rem
+        2rem;
 
-    border:1px solid #433538;
+    border:
+        1px solid
+        #433538;
 
     border-radius:26px;
 
@@ -275,9 +309,11 @@ st.markdown("""
         );
 
     box-shadow:
-        0 18px 50px rgba(0,0,0,.26);
+        0 18px 50px
+        rgba(0,0,0,.26);
 
     margin-bottom:1.15rem;
+
 }
 
 
@@ -292,6 +328,7 @@ st.markdown("""
     font-weight:900;
 
     letter-spacing:-.045em;
+
 }
 
 
@@ -304,6 +341,7 @@ st.markdown("""
     font-size:1rem;
 
     max-width:760px;
+
 }
 
 
@@ -322,6 +360,7 @@ st.markdown("""
     letter-spacing:.18em;
 
     text-transform:uppercase;
+
 }
 
 
@@ -336,6 +375,7 @@ st.markdown("""
     letter-spacing:-.035em;
 
     margin:.18rem 0 .3rem;
+
 }
 
 
@@ -346,6 +386,7 @@ st.markdown("""
     font-size:.96rem;
 
     margin-bottom:1.15rem;
+
 }
 
 
@@ -356,22 +397,32 @@ st.markdown("""
 .question{
 
     background:
+
         linear-gradient(
             135deg,
             #21191b,
             #1c1718
         );
 
-    border:1px solid #3b3032;
+    border:
+        1px solid
+        #3b3032;
 
     border-radius:16px;
 
-    padding:.9rem 1rem;
+    padding:
+        .9rem
+        1rem;
 
-    margin:.7rem 0 1.7rem;
+    margin:
+        .7rem
+        0
+        1.7rem;
 
     box-shadow:
-        0 8px 24px rgba(0,0,0,.18);
+        0 8px 24px
+        rgba(0,0,0,.18);
+
 }
 
 
@@ -386,6 +437,7 @@ st.markdown("""
     letter-spacing:.15em;
 
     text-transform:uppercase;
+
 }
 
 
@@ -398,6 +450,7 @@ st.markdown("""
     font-weight:750;
 
     margin-top:.22rem;
+
 }
 
 
@@ -408,27 +461,35 @@ st.markdown("""
 .insight{
 
     background:
+
         linear-gradient(
             135deg,
             #241b1e,
             #1b1718
         );
 
-    border:1px solid #493238;
+    border:
+        1px solid
+        #493238;
 
-    border-left:4px solid
+    border-left:
+        4px solid
         var(--burgundy2);
 
     border-radius:14px;
 
-    padding:.9rem 1rem;
+    padding:
+        .9rem
+        1rem;
 
     margin:.95rem 0;
 
     color:#d8cec7;
 
     box-shadow:
-        0 8px 22px rgba(0,0,0,.18);
+        0 8px 22px
+        rgba(0,0,0,.18);
+
 }
 
 
@@ -439,25 +500,33 @@ st.markdown("""
 .impact{
 
     background:
+
         linear-gradient(
             135deg,
             #302127,
             #211a1c
         );
 
-    border:1px solid #54353e;
+    border:
+        1px solid
+        #54353e;
 
-    border-left:5px solid
+    border-left:
+        5px solid
         var(--champagne);
 
     border-radius:15px;
 
-    padding:.95rem 1rem;
+    padding:
+        .95rem
+        1rem;
 
     margin-bottom:1.1rem;
 
     box-shadow:
-        0 10px 28px rgba(0,0,0,.22);
+        0 10px 28px
+        rgba(0,0,0,.22);
+
 }
 
 
@@ -472,6 +541,7 @@ st.markdown("""
     letter-spacing:.13em;
 
     text-transform:uppercase;
+
 }
 
 
@@ -482,6 +552,7 @@ st.markdown("""
     font-weight:750;
 
     margin-top:.28rem;
+
 }
 
 
@@ -492,11 +563,12 @@ st.markdown("""
     font-size:.75rem;
 
     margin-top:.2rem;
+
 }
 
 
 /* ============================================================
-   SELECTED FILTER PILL
+   SELECTED RECORD PILL
    ============================================================ */
 
 .pill{
@@ -508,17 +580,22 @@ st.markdown("""
 
     color:#d7b9c3;
 
-    border:1px solid #573342;
+    border:
+        1px solid
+        #573342;
 
     border-radius:999px;
 
-    padding:.28rem .65rem;
+    padding:
+        .28rem
+        .65rem;
 
     font-size:.68rem;
 
     font-weight:800;
 
     margin-bottom:.65rem;
+
 }
 
 
@@ -529,26 +606,32 @@ st.markdown("""
 div[data-testid="stMetric"]{
 
     background:
+
         linear-gradient(
             145deg,
             #211a1c,
             #1b1718
         );
 
-    border:1px solid #393033;
+    border:
+        1px solid
+        #393033;
 
     border-radius:16px;
 
     box-shadow:
-        0 10px 26px rgba(0,0,0,.20);
+        0 10px 26px
+        rgba(0,0,0,.20);
 
     padding:.85rem;
+
 }
 
 
 div[data-testid="stMetric"] label{
 
     color:#9f9691!important;
+
 }
 
 
@@ -556,6 +639,7 @@ div[data-testid="stMetric"]
 [data-testid="stMetricValue"]{
 
     color:#f3eee6!important;
+
 }
 
 
@@ -567,7 +651,9 @@ div[data-testid="stMetric"]
 
     border-radius:11px;
 
-    border:1px solid #46383b;
+    border:
+        1px solid
+        #46383b;
 
     background:#211a1c;
 
@@ -575,17 +661,21 @@ div[data-testid="stMetric"]
 
     font-weight:700;
 
-    transition:.2s ease;
+    transition:
+        .2s ease;
+
 }
 
 
 .stButton>button:hover{
 
-    border-color:var(--champagne);
+    border-color:
+        var(--champagne);
 
     color:#f0d9a5;
 
     background:#292022;
+
 }
 
 
@@ -593,21 +683,26 @@ div[data-testid="column"]
 .stButton>button{
 
     min-height:2.45rem;
+
 }
 
 
-/* PRIMARY BUTTON */
+/* ============================================================
+   PRIMARY BUTTON
+   ============================================================ */
 
 .stButton>button[kind="primary"]{
 
     background:
+
         linear-gradient(
             135deg,
             #6e233e,
             #922f50
         )!important;
 
-    border:1px solid
+    border:
+        1px solid
         #b05a76!important;
 
     color:#fff!important;
@@ -615,11 +710,59 @@ div[data-testid="column"]
     box-shadow:
         0 8px 20px
         rgba(123,41,70,.28);
+
 }
 
 
 /* ============================================================
-   FORM
+   NAVIGATION TOGGLE
+   ============================================================ */
+
+.nav-toggle button{
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #7b2946,
+            #9f3d5d
+        )!important;
+
+    border:
+        1px solid
+        #c06b86!important;
+
+    color:#fff!important;
+
+    font-size:.78rem!important;
+
+    font-weight:850!important;
+
+    letter-spacing:.02em;
+
+    box-shadow:
+        0 8px 22px
+        rgba(123,41,70,.25);
+
+}
+
+
+.nav-toggle button:hover{
+
+    background:
+        linear-gradient(
+            135deg,
+            #922f50,
+            #b14a6a
+        )!important;
+
+    color:#fff!important;
+
+}
+
+
+/* ============================================================
+   FILTER FORM
    ============================================================ */
 
 [data-testid="stForm"]{
@@ -627,6 +770,7 @@ div[data-testid="column"]
     border:0!important;
 
     padding:0!important;
+
 }
 
 
@@ -638,6 +782,7 @@ div[data-testid="column"]
 [data-testid="stDateInput"]{
 
     margin-bottom:.2rem;
+
 }
 
 
@@ -650,6 +795,7 @@ div[data-baseweb="select"]>div,
     border-color:#403437!important;
 
     color:#eee7df!important;
+
 }
 
 
@@ -657,6 +803,7 @@ div[data-baseweb="select"]>div,
 div[data-baseweb="select"] span{
 
     color:#e8ddd5!important;
+
 }
 
 
@@ -666,32 +813,37 @@ div[data-baseweb="select"] span{
     color:#8f8783!important;
 
     font-size:.73rem;
+
 }
 
 
 /* ============================================================
-   GRAPH SPACING
+   CHART SPACING
    ============================================================ */
 
 .plotly-chart-container{
 
-    margin-top:.2rem;
+    margin-top:.25rem;
 
     padding-top:.15rem;
 
-    margin-bottom:.35rem;
+    margin-bottom:.45rem;
+
 }
 
 
 .js-plotly-plot{
 
-    border:1px solid #342b2d;
+    border:
+        1px solid
+        #342b2d;
 
     border-radius:18px;
 
     overflow:hidden;
 
     background:#1b1718;
+
 }
 
 
@@ -710,6 +862,7 @@ div[data-baseweb="select"] span{
     padding-top:1.25rem;
 
     letter-spacing:.05em;
+
 }
 
 
@@ -720,12 +873,14 @@ div[data-baseweb="select"] span{
 ::-webkit-scrollbar{
 
     width:8px;
+
 }
 
 
 ::-webkit-scrollbar-track{
 
     background:#120f10;
+
 }
 
 
@@ -734,12 +889,14 @@ div[data-baseweb="select"] span{
     background:#4d343d;
 
     border-radius:10px;
+
 }
 
 
 ::-webkit-scrollbar-thumb:hover{
 
     background:#7b2946;
+
 }
 
 </style>
@@ -752,10 +909,6 @@ div[data-baseweb="select"] span{
 
 BASE_DIR = Path(__file__).resolve().parent
 
-
-# ============================================================
-# MASCOT
-# ============================================================
 
 MASCOT_CANDIDATES = [
 
@@ -775,29 +928,32 @@ MASCOT_CANDIDATES = [
 
 
 MASCOT_PATH = next(
+
     (
         p
         for p in MASCOT_CANDIDATES
         if p.exists()
     ),
+
     None
+
 )
 
 
-# ============================================================
-# DATA FILE LOCATIONS
-# ============================================================
-
 DATA_FILES = [
 
-    BASE_DIR / "Last mile Delivery Data.csv",
-
-    BASE_DIR / "data" /
+    BASE_DIR /
     "Last mile Delivery Data.csv",
 
-    BASE_DIR / "last_mile_delivery_data.csv",
+    BASE_DIR /
+    "data" /
+    "Last mile Delivery Data.csv",
 
-    BASE_DIR / "data" /
+    BASE_DIR /
+    "last_mile_delivery_data.csv",
+
+    BASE_DIR /
+    "data" /
     "last_mile_delivery_data.csv",
 
 ]
@@ -811,31 +967,40 @@ DATA_FILES = [
 def load_data():
 
     path = next(
+
         (
             p
             for p in DATA_FILES
             if p.exists()
         ),
+
         None
+
     )
+
 
     if path is None:
 
         return None, None
 
+
     return (
+
         pd.read_csv(path),
+
         path.name
+
     )
 
 
 # ============================================================
-# DATA PREPARATION
+# PREPARE DATA
 # ============================================================
 
 def prepare(raw):
 
     df = raw.copy()
+
 
     df.columns = (
         df.columns
@@ -844,41 +1009,44 @@ def prepare(raw):
 
 
     # --------------------------------------------------------
-    # TEXT COLUMNS
+    # TEXT
     # --------------------------------------------------------
 
     for c in [
+
         "Order_ID",
         "Weather",
         "Traffic",
         "Vehicle",
         "Area",
         "Category"
+
     ]:
 
         df[c] = (
+
             df[c]
+
             .astype("string")
+
             .str.strip()
+
         )
 
 
     # --------------------------------------------------------
-    # NUMERIC COLUMNS
+    # NUMERIC
     # --------------------------------------------------------
 
     for c in [
 
         "Agent_Age",
-
         "Agent_Rating",
 
         "Store_Latitude",
-
         "Store_Longitude",
 
         "Drop_Latitude",
-
         "Drop_Longitude",
 
         "Delivery_Time"
@@ -886,24 +1054,35 @@ def prepare(raw):
     ]:
 
         df[c] = pd.to_numeric(
+
             df[c],
+
             errors="coerce"
+
         )
 
 
     # --------------------------------------------------------
-    # ORDER DATE
+    # DATE
     # --------------------------------------------------------
 
     df["Order_Date"] = pd.to_datetime(
+
         df["Order_Date"],
+
         errors="coerce"
+
     )
 
 
     date_txt = (
+
         df["Order_Date"]
-        .dt.strftime("%Y-%m-%d")
+
+        .dt
+
+        .strftime("%Y-%m-%d")
+
     )
 
 
@@ -914,9 +1093,13 @@ def prepare(raw):
     df["Order_DateTime"] = pd.to_datetime(
 
         date_txt
+
         + " "
+
         + df["Order_Time"]
+
             .astype("string")
+
             .str.strip(),
 
         errors="coerce"
@@ -931,9 +1114,13 @@ def prepare(raw):
     df["Pickup_DateTime"] = pd.to_datetime(
 
         date_txt
+
         + " "
+
         + df["Pickup_Time"]
+
             .astype("string")
+
             .str.strip(),
 
         errors="coerce"
@@ -946,12 +1133,18 @@ def prepare(raw):
     # --------------------------------------------------------
 
     df = df.dropna(
-        subset=["Delivery_Time"]
+
+        subset=[
+            "Delivery_Time"
+        ]
+
     ).copy()
 
 
     df = df[
+
         df["Delivery_Time"] >= 0
+
     ].copy()
 
 
@@ -960,8 +1153,13 @@ def prepare(raw):
     # ========================================================
 
     df["Order_Hour"] = (
+
         df["Order_DateTime"]
-        .dt.hour
+
+        .dt
+
+        .hour
+
     )
 
 
@@ -971,26 +1169,34 @@ def prepare(raw):
 
             return "Unknown"
 
+
         hour = int(hour)
+
 
         if hour <= 5:
 
             return "Night"
 
+
         if hour <= 11:
 
             return "Morning"
+
 
         if hour <= 16:
 
             return "Afternoon"
 
+
         return "Evening"
 
 
     df["Time_of_Day"] = (
+
         df["Order_Hour"]
+
         .apply(tod)
+
     )
 
 
@@ -1001,19 +1207,23 @@ def prepare(raw):
     df["Pickup_Duration"] = (
 
         df["Pickup_DateTime"]
+
         - df["Order_DateTime"]
 
     ).dt.total_seconds() / 60
 
 
     df.loc[
+
         df["Pickup_Duration"] < 0,
+
         "Pickup_Duration"
+
     ] = np.nan
 
 
     # ========================================================
-    # DELIVERY DISTANCE — HAVERSINE
+    # HAVERSINE DISTANCE
     # ========================================================
 
     df["Delivery_Distance"] = np.nan
@@ -1022,44 +1232,55 @@ def prepare(raw):
     distance_mask = df[
 
         [
+
             "Store_Latitude",
             "Store_Longitude",
+
             "Drop_Latitude",
             "Drop_Longitude"
+
         ]
 
     ].notna().all(axis=1)
 
 
     lat1 = np.radians(
+
         df.loc[
             distance_mask,
             "Store_Latitude"
         ]
+
     )
 
 
     lon1 = np.radians(
+
         df.loc[
             distance_mask,
             "Store_Longitude"
         ]
+
     )
 
 
     lat2 = np.radians(
+
         df.loc[
             distance_mask,
             "Drop_Latitude"
         ]
+
     )
 
 
     lon2 = np.radians(
+
         df.loc[
             distance_mask,
             "Drop_Longitude"
         ]
+
     )
 
 
@@ -1075,19 +1296,26 @@ def prepare(raw):
         +
 
         np.cos(lat1)
+
         * np.cos(lat2)
+
         * np.sin(dlon / 2) ** 2
 
     )
 
 
     df.loc[
+
         distance_mask,
+
         "Delivery_Distance"
+
     ] = (
 
         6371
+
         * 2
+
         * np.arcsin(
             np.sqrt(a)
         )
@@ -1096,7 +1324,7 @@ def prepare(raw):
 
 
     # ========================================================
-    # AGENT AGE GROUP
+    # AGE GROUP
     # ========================================================
 
     df["Agent_Age_Group"] = pd.cut(
@@ -1137,6 +1365,7 @@ def prepare(raw):
     df["Late_Delivery"] = (
 
         df["Delivery_Time"]
+
         > late_threshold
 
     )
@@ -1146,7 +1375,7 @@ def prepare(raw):
 
 
 # ============================================================
-# LOAD DATA
+# LOAD
 # ============================================================
 
 raw, filename = load_data()
@@ -1173,61 +1402,79 @@ df, late_threshold = prepare(raw)
 # ============================================================
 
 weather_options = sorted(
+
     df["Weather"]
     .dropna()
     .unique()
     .tolist()
+
 )
 
 
 traffic_options = sorted(
+
     df["Traffic"]
     .dropna()
     .unique()
     .tolist()
+
 )
 
 
 vehicle_options = sorted(
+
     df["Vehicle"]
     .dropna()
     .unique()
     .tolist()
+
 )
 
 
 category_options = sorted(
+
     df["Category"]
     .dropna()
     .unique()
     .tolist()
+
 )
 
 
 area_options = sorted(
+
     df["Area"]
     .dropna()
     .unique()
     .tolist()
+
 )
 
 
 min_date = (
+
     df["Order_Date"]
+
     .min()
+
     .date()
+
 )
 
 
 max_date = (
+
     df["Order_Date"]
+
     .max()
+
     .date()
+
 )
 
 
 # ============================================================
-# NAVIGATION PAGES
+# PAGES
 # ============================================================
 
 PAGES = [
@@ -1254,7 +1501,7 @@ PAGES = [
 
 
 # ============================================================
-# SESSION STATE — CURRENT PAGE
+# SESSION STATE
 # ============================================================
 
 if "page" not in st.session_state:
@@ -1262,9 +1509,10 @@ if "page" not in st.session_state:
     st.session_state.page = PAGES[0]
 
 
-# ============================================================
-# SESSION STATE — APPLIED FILTERS
-# ============================================================
+if "nav_open" not in st.session_state:
+
+    st.session_state.nav_open = True
+
 
 if "filters" not in st.session_state:
 
@@ -1295,16 +1543,7 @@ if "filters" not in st.session_state:
 
 
 # ============================================================
-# SESSION STATE — NAVIGATION
-# ============================================================
-
-if "nav_open" not in st.session_state:
-
-    st.session_state.nav_open = True
-
-
-# ============================================================
-# THREE-COLUMN APPLICATION SHELL
+# THREE-COLUMN SHELL
 # ============================================================
 
 if st.session_state.nav_open:
@@ -1314,7 +1553,7 @@ if st.session_state.nav_open:
         [
             1.02,
             2.45,
-            0.92
+            .92
         ],
 
         gap="large"
@@ -1327,7 +1566,7 @@ else:
 
         [
             3.18,
-            0.92
+            .92
         ],
 
         gap="large"
@@ -1345,17 +1584,30 @@ if left is not None:
 
     with left:
 
-        # ----------------------------------------------------
-        # CLOSE NAVIGATION
-        # ----------------------------------------------------
+        # ====================================================
+        # BIG VISIBLE HIDE BUTTON
+        # ====================================================
+
+        st.markdown(
+
+            '<div class="nav-toggle">',
+
+            unsafe_allow_html=True
+
+        )
+
 
         if st.button(
 
-            "‹  Close menu",
+            "☰  HIDE NAVIGATION",
 
             key="close_navigation",
 
-            use_container_width=True
+            use_container_width=True,
+
+            help=
+                "Hide the navigation panel "
+                "and expand the analysis area."
 
         ):
 
@@ -1364,19 +1616,8 @@ if left is not None:
             st.rerun()
 
 
-        # ----------------------------------------------------
-        # BRAND
-        # ----------------------------------------------------
-
         st.markdown(
 
-            '<div class="brand">'
-            '<div class="brand-name">'
-            'LOGISIGHT'
-            '</div>'
-            '<div class="brand-sub">'
-            'LAST-MILE DELIVERY INTELLIGENCE'
-            '</div>'
             '</div>',
 
             unsafe_allow_html=True
@@ -1384,9 +1625,32 @@ if left is not None:
         )
 
 
-        # ----------------------------------------------------
+        # ====================================================
+        # BRAND
+        # ====================================================
+
+        st.markdown(
+
+            '<div class="brand">'
+
+            '<div class="brand-name">'
+            'LOGISIGHT'
+            '</div>'
+
+            '<div class="brand-sub">'
+            'LAST-MILE DELIVERY INTELLIGENCE'
+            '</div>'
+
+            '</div>',
+
+            unsafe_allow_html=True
+
+        )
+
+
+        # ====================================================
         # NAVIGATION
-        # ----------------------------------------------------
+        # ====================================================
 
         st.markdown(
 
@@ -1402,8 +1666,10 @@ if left is not None:
         for i, name in enumerate(PAGES):
 
             active = (
+
                 st.session_state.page
                 == name
+
             )
 
 
@@ -1414,6 +1680,7 @@ if left is not None:
                     if active
                     else ""
                 )
+
                 + name,
 
                 key=f"nav_{i}",
@@ -1421,9 +1688,13 @@ if left is not None:
                 use_container_width=True,
 
                 type=(
+
                     "primary"
+
                     if active
+
                     else "secondary"
+
                 )
 
             ):
@@ -1433,9 +1704,9 @@ if left is not None:
                 st.rerun()
 
 
-        # ----------------------------------------------------
+        # ====================================================
         # MANAGER WORKFLOW
-        # ----------------------------------------------------
+        # ====================================================
 
         st.markdown(
 
@@ -1453,15 +1724,19 @@ if left is not None:
             '<div class="guide">'
 
             '<b>1</b> Choose a business question.'
+
             '<br><br>'
 
             '<b>2</b> Refine the segment on the right.'
+
             '<br><br>'
 
             '<b>3</b> Click <b>Apply filters</b>.'
+
             '<br><br>'
 
             '<b>4</b> Read the before → after impact.'
+
             '<br><br>'
 
             '<b>5</b> Use the graph to support a decision.'
@@ -1473,9 +1748,9 @@ if left is not None:
         )
 
 
-        # ----------------------------------------------------
-        # DASHBOARD STATUS
-        # ----------------------------------------------------
+        # ====================================================
+        # STATUS
+        # ====================================================
 
         st.markdown(
 
@@ -1489,19 +1764,16 @@ if left is not None:
 
 
         st.caption(
-            f"Dataset: {len(df):,} cleaned records"
+
+            f"Dataset: "
+            f"{len(df):,} cleaned records"
+
         )
 
 
-        st.caption(
-            f"Current view: "
-            f"{len(df):,} records before filters"
-        )
-
-
-        # ----------------------------------------------------
+        # ====================================================
         # MASCOT
-        # ----------------------------------------------------
+        # ====================================================
 
         if MASCOT_PATH:
 
@@ -1566,14 +1838,9 @@ with right:
     old = st.session_state.filters
 
 
-    # IMPORTANT:
-    # The form prevents dashboard updates until Apply.
-    #
-    # The key "filter_form" is intentionally different
-    # from st.session_state["filters"].
-    #
-    # This fixes the previous:
-    # StreamlitWidgetAlreadyInstantiatedError
+    # ========================================================
+    # FILTER FORM
+    # ========================================================
 
     with st.form(
 
@@ -1643,8 +1910,11 @@ with right:
             "📅 Order dates",
 
             value=(
+
                 old["start"],
+
                 old["end"]
+
             ),
 
             min_value=min_date,
@@ -1656,7 +1926,7 @@ with right:
 
         apply = st.form_submit_button(
 
-            "✓  Apply filters",
+            "✓  APPLY FILTERS",
 
             use_container_width=True,
 
@@ -1666,7 +1936,7 @@ with right:
 
 
     # ========================================================
-    # APPLY FILTERS
+    # APPLY
     # ========================================================
 
     if apply:
@@ -1725,12 +1995,11 @@ with right:
 
         st.session_state.filter_applied = True
 
-
         st.rerun()
 
 
     # ========================================================
-    # RESET FILTERS
+    # RESET
     # ========================================================
 
     if st.button(
@@ -1778,12 +2047,11 @@ with right:
 
         st.session_state.filter_applied = True
 
-
         st.rerun()
 
 
 # ============================================================
-# APPLY FILTERS TO DATA
+# FILTER DATA
 # ============================================================
 
 filters = st.session_state.filters
@@ -1837,45 +2105,50 @@ filtered = df[
 
 
 # ============================================================
-# CENTER ANALYSIS AREA
+# CENTER
 # ============================================================
 
 with center:
 
-
     # ========================================================
-    # REOPEN NAVIGATION
+    # SHOW NAVIGATION BUTTON WHEN CLOSED
     # ========================================================
 
     if not st.session_state.nav_open:
 
-        menu_col, spacer = st.columns(
+        st.markdown(
 
-            [
-                0.12,
-                0.88
-            ]
+            '<div class="nav-toggle">',
+
+            unsafe_allow_html=True
 
         )
 
 
-        with menu_col:
+        if st.button(
 
-            if st.button(
+            "☰  SHOW NAVIGATION",
 
-                "☰",
+            key="open_navigation",
 
-                key="open_navigation",
+            use_container_width=False,
 
-                help="Open navigation",
+            help="Show the navigation panel."
 
-                use_container_width=True
+        ):
 
-            ):
+            st.session_state.nav_open = True
 
-                st.session_state.nav_open = True
+            st.rerun()
 
-                st.rerun()
+
+        st.markdown(
+
+            '</div>',
+
+            unsafe_allow_html=True
+
+        )
 
 
     # ========================================================
@@ -1949,14 +2222,18 @@ with center:
 
 
             old_avg = (
+
                 old_df["Delivery_Time"]
                 .mean()
+
             )
 
 
             new_avg = (
+
                 filtered["Delivery_Time"]
                 .mean()
+
             )
 
 
@@ -2037,9 +2314,7 @@ with center:
                     <div class="impact">
 
                         <div class="impact-title">
-
                             ✓ Filter change applied
-
                         </div>
 
                         <div class="impact-main">
@@ -2099,7 +2374,7 @@ with center:
 
 
     # ========================================================
-    # SELECTED RECORDS
+    # RECORD COUNT
     # ========================================================
 
     st.markdown(
@@ -2131,6 +2406,7 @@ with center:
         st.markdown(
 
             f'''
+
             <div class="eyebrow">
                 {kicker}
             </div>
@@ -2142,6 +2418,7 @@ with center:
             <div class="page-subtitle">
                 {subtitle}
             </div>
+
             ''',
 
             unsafe_allow_html=True
@@ -2158,6 +2435,7 @@ with center:
         st.markdown(
 
             f'''
+
             <div class="question">
 
                 <div class="question-label">
@@ -2169,6 +2447,7 @@ with center:
                 </div>
 
             </div>
+
             ''',
 
             unsafe_allow_html=True
@@ -2185,6 +2464,7 @@ with center:
         st.markdown(
 
             f'''
+
             <div class="insight">
 
                 <b>Key insight:</b>
@@ -2192,6 +2472,7 @@ with center:
                 {text}
 
             </div>
+
             ''',
 
             unsafe_allow_html=True
@@ -2227,7 +2508,8 @@ with center:
 
             ),
 
-            # EXTRA SPACE ABOVE GRAPH TITLE
+            # More breathing room
+            # between title and graph
 
             margin=dict(
 
@@ -2235,7 +2517,7 @@ with center:
 
                 r=32,
 
-                t=115,
+                t=120,
 
                 b=42
 
@@ -2243,11 +2525,11 @@ with center:
 
             title=dict(
 
-                x=0.02,
+                x=.02,
 
                 xanchor="left",
 
-                y=0.98,
+                y=.98,
 
                 yanchor="top",
 
@@ -2354,6 +2636,7 @@ with center:
         st.markdown(
 
             '''
+
             <div class="hero">
 
                 <div class="eyebrow">
@@ -2371,6 +2654,7 @@ with center:
                 </p>
 
             </div>
+
             ''',
 
             unsafe_allow_html=True
@@ -2419,6 +2703,7 @@ with center:
                 if pd.notna(avg)
 
                 else "N/A"
+
             )
 
         )
@@ -2523,6 +2808,7 @@ with center:
                 st.markdown(
 
                     f'''
+
                     <div class="guide"
                          style="
                          min-height:80px;
@@ -2543,6 +2829,7 @@ with center:
                         {desc}
 
                     </div>
+
                     ''',
 
                     unsafe_allow_html=True
@@ -2589,8 +2876,14 @@ with center:
             filtered
 
             .groupby(
-                ["Weather", "Traffic"],
+
+                [
+                    "Weather",
+                    "Traffic"
+                ],
+
                 as_index=False
+
             )
 
             ["Delivery_Time"]
@@ -2664,7 +2957,9 @@ with center:
 
 
             worst = q.loc[
+
                 q["Delivery_Time"].idxmax()
+
             ]
 
 
@@ -2680,7 +2975,7 @@ with center:
 
 
     # ========================================================
-    # Q2 — VEHICLE COMPARISON
+    # Q2 — VEHICLE
     # ========================================================
 
     elif page == "🚗 Vehicle Comparison":
@@ -2691,8 +2986,7 @@ with center:
 
             "Vehicle Comparison",
 
-            "Compare delivery performance "
-            "across vehicle types"
+            "Compare delivery performance across vehicle types"
 
         )
 
@@ -2710,8 +3004,11 @@ with center:
             filtered
 
             .groupby(
+
                 "Vehicle",
+
                 as_index=False
+
             )
 
             ["Delivery_Time"]
@@ -2738,7 +3035,9 @@ with center:
             }
 
         ).sort_values(
+
             "Average"
+
         )
 
 
@@ -2775,8 +3074,7 @@ with center:
                 },
 
                 title=
-                    "Average Delivery Time "
-                    "by Vehicle"
+                    "Average Delivery Time by Vehicle"
 
             )
 
@@ -2830,8 +3128,7 @@ with center:
 
             "Agent Performance",
 
-            "Explore rating, age and "
-            "delivery-time relationships"
+            "Explore rating, age and delivery-time relationships"
 
         )
 
@@ -2872,7 +3169,9 @@ with center:
             corr = q[
                 "Agent_Rating"
             ].corr(
+
                 q["Delivery_Time"]
+
             )
 
 
@@ -2993,8 +3292,8 @@ with center:
 
             insight(
 
-                f"The rating/delivery-time "
-                f"correlation is <b>{corr:.2f}</b>. "
+                f"The rating/delivery-time correlation "
+                f"is <b>{corr:.2f}</b>. "
                 "A value close to zero indicates "
                 "a weak linear relationship."
 
@@ -3002,7 +3301,7 @@ with center:
 
 
     # ========================================================
-    # Q4 — AREA ANALYSIS
+    # Q4 — AREA
     # ========================================================
 
     elif page == "🗺️ Area Analysis":
@@ -3013,8 +3312,7 @@ with center:
 
             "Area Analysis",
 
-            "Locate areas with slower "
-            "average delivery performance"
+            "Locate areas with slower average delivery performance"
 
         )
 
@@ -3032,8 +3330,11 @@ with center:
             filtered
 
             .groupby(
+
                 "Area",
+
                 as_index=False
+
             )
 
             ["Delivery_Time"]
@@ -3100,8 +3401,7 @@ with center:
                 },
 
                 title=
-                    "Average Delivery Time "
-                    "by Area"
+                    "Average Delivery Time by Area"
 
             )
 
@@ -3109,8 +3409,10 @@ with center:
             fig.update_layout(
 
                 yaxis={
+
                     "categoryorder":
                         "total ascending"
+
                 }
 
             )
@@ -3164,7 +3466,7 @@ with center:
 
 
     # ========================================================
-    # Q5 — CATEGORY ANALYSIS
+    # Q5 — CATEGORY
     # ========================================================
 
     elif page == "📦 Category Analysis":
@@ -3175,8 +3477,7 @@ with center:
 
             "Category Analysis",
 
-            "Compare delivery-time distributions "
-            "and variability"
+            "Compare delivery-time distributions and variability"
 
         )
 
@@ -3214,17 +3515,21 @@ with center:
 
                 q
 
-                .groupby("Category")
+                .groupby(
+                    "Category"
+                )
 
                 ["Delivery_Time"]
 
                 .agg(
+
                     [
                         "mean",
                         "std",
                         "median",
                         "count"
                     ]
+
                 )
 
                 .reset_index()
@@ -3233,12 +3538,16 @@ with center:
 
 
             hi = stats.loc[
+
                 stats["mean"].idxmax()
+
             ]
 
 
             var = stats.loc[
+
                 stats["std"].idxmax()
+
             ]
 
 
@@ -3294,8 +3603,7 @@ with center:
                 },
 
                 title=
-                    "Delivery-Time Distribution "
-                    "by Category"
+                    "Delivery-Time Distribution by Category"
 
             )
 
@@ -3377,8 +3685,7 @@ with center:
 
             "Time-of-Day Analyzer",
 
-            "Compare performance across "
-            "order times"
+            "Compare performance across order times"
 
         )
 
@@ -3409,8 +3716,11 @@ with center:
             filtered
 
             .groupby(
+
                 "Time_of_Day",
+
                 as_index=False
+
             )
 
             ["Delivery_Time"]
@@ -3488,8 +3798,7 @@ with center:
                 },
 
                 title=
-                    "Average Delivery Time "
-                    "by Time of Day"
+                    "Average Delivery Time by Time of Day"
 
             )
 
@@ -3522,7 +3831,9 @@ with center:
 
 
             worst = q.loc[
+
                 q["Average"].idxmax()
+
             ]
 
 
@@ -3537,7 +3848,7 @@ with center:
 
 
     # ========================================================
-    # DISTANCE ANALYZER
+    # DISTANCE
     # ========================================================
 
     elif page == "📍 Distance Analyzer":
@@ -3548,8 +3859,7 @@ with center:
 
             "Distance Analyzer",
 
-            "Test whether delivery distance "
-            "corresponds to delivery time"
+            "Test whether delivery distance corresponds to delivery time"
 
         )
 
@@ -3587,9 +3897,13 @@ with center:
         else:
 
             corr = q[
+
                 "Delivery_Distance"
+
             ].corr(
+
                 q["Delivery_Time"]
+
             )
 
 
@@ -3694,7 +4008,7 @@ with center:
 
 
     # ========================================================
-    # PICKUP EFFICIENCY
+    # PICKUP
     # ========================================================
 
     elif page == "⏱️ Pickup Efficiency":
@@ -3705,8 +4019,7 @@ with center:
 
             "Pickup Efficiency Analyzer",
 
-            "Explore pickup duration and "
-            "overall delivery time"
+            "Explore pickup duration and overall delivery time"
 
         )
 
@@ -3744,9 +4057,13 @@ with center:
         else:
 
             corr = q[
+
                 "Pickup_Duration"
+
             ].corr(
+
                 q["Delivery_Time"]
+
             )
 
 
@@ -3857,9 +4174,13 @@ with center:
 st.markdown(
 
     '''
+
     <div class="footer">
+
         LOGISIGHT • Same data. Smarter decisions. • FA-2
+
     </div>
+
     ''',
 
     unsafe_allow_html=True
