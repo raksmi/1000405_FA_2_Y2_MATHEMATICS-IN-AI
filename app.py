@@ -26,169 +26,157 @@ st.markdown(
     """
     <style>
     :root {
-        --ink: #073b4c;
-        --muted: #638084;
-        --teal: #159a9c;
-        --mint: #dff7f3;
-        --line: #d8ebe8;
-        --bg: #f6fbfa;
-        --card: #ffffff;
+        --ink: #17443a;
+        --muted: #70847d;
+        --green: #3f8068;
+        --sage: #e4f0e9;
+        --line: #dbe7e1;
+        --gold: #b69a62;
     }
 
     .stApp {
-        background: var(--bg);
+        background:
+            radial-gradient(circle at 90% 0%, rgba(110,170,145,.10), transparent 28%),
+            linear-gradient(180deg, #fbfcf9 0%, #f5f8f5 100%);
     }
 
     .block-container {
-        max-width: 1400px;
-        padding-top: 1.2rem;
-        padding-bottom: 3rem;
+        max-width: 1440px;
+        padding: 1.3rem 2.2rem 3.5rem;
     }
 
     [data-testid="stSidebar"] {
-        background: #ffffff;
+        background: #f8faf7;
         border-right: 1px solid var(--line);
     }
 
-    [data-testid="stSidebar"] .block-container {
-        padding-top: 1.5rem;
-    }
-
     .brand {
-        padding: 1rem 1.1rem;
-        border-radius: 18px;
-        background: linear-gradient(135deg, #073b4c, #159a9c);
+        padding: 1.05rem 1.1rem;
+        border-radius: 20px;
+        background: linear-gradient(145deg, #234f42, #3f8068);
         color: white;
-        margin-bottom: 1.1rem;
-        box-shadow: 0 8px 24px rgba(7,59,76,.12);
+        margin-bottom: 1rem;
+        box-shadow: 0 12px 30px rgba(35,79,66,.14);
     }
 
-    .brand-title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: .03em;
-    }
-
-    .brand-subtitle {
-        opacity: .85;
-        font-size: .82rem;
-        margin-top: .15rem;
-    }
+    .brand-title { font-size: 1.3rem; font-weight: 850; letter-spacing: .04em; }
+    .brand-subtitle { opacity: .84; font-size: .78rem; margin-top: .15rem; }
 
     .hero {
-        padding: 1.6rem 1.8rem;
-        border-radius: 22px;
+        min-height: 230px;
+        padding: 2rem 2.1rem;
+        border-radius: 28px;
         background:
-            radial-gradient(circle at 90% 15%, rgba(21,154,156,.18), transparent 28%),
-            linear-gradient(135deg, #e2f8f4 0%, #ffffff 70%);
+            radial-gradient(circle at 88% 18%, rgba(63,128,104,.20), transparent 23%),
+            radial-gradient(circle at 72% 90%, rgba(182,154,98,.08), transparent 25%),
+            linear-gradient(135deg, #e7f2ec 0%, #ffffff 72%);
         border: 1px solid var(--line);
-        box-shadow: 0 8px 28px rgba(7,59,76,.06);
-        margin-bottom: 1.2rem;
+        box-shadow: 0 14px 42px rgba(34,71,59,.08);
+        margin-bottom: 1.15rem;
     }
 
     .hero h1 {
         color: var(--ink);
         margin: 0;
-        font-size: 2.45rem;
-        font-weight: 800;
-        letter-spacing: -.03em;
+        font-size: 2.65rem;
+        font-weight: 850;
+        letter-spacing: -.045em;
     }
 
-    .hero p {
-        color: var(--muted);
-        margin: .45rem 0 0;
-        font-size: 1.02rem;
-    }
+    .hero p { color: var(--muted); margin: .5rem 0 0; font-size: 1.04rem; max-width: 700px; }
 
     .eyebrow {
-        color: var(--teal);
-        font-size: .76rem;
-        font-weight: 800;
+        color: var(--green);
+        font-size: .70rem;
+        font-weight: 850;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+        margin-bottom: .4rem;
+    }
+
+    .page-title { color: var(--ink); font-size: 2.1rem; font-weight: 850; margin: .1rem 0 .22rem; letter-spacing: -.035em; }
+    .page-subtitle { color: var(--muted); margin-bottom: 1.15rem; font-size: 1.02rem; }
+
+    .question-box {
+        background: rgba(255,255,255,.92);
+        border: 1px solid var(--line);
+        border-radius: 17px;
+        padding: .9rem 1.05rem;
+        margin: .35rem 0 1rem;
+        box-shadow: 0 5px 18px rgba(35,79,66,.04);
+    }
+
+    .question-label {
+        color: var(--gold);
+        font-size: .68rem;
         letter-spacing: .13em;
         text-transform: uppercase;
-        margin-bottom: .35rem;
+        font-weight: 850;
     }
 
-    .page-title {
-        color: var(--ink);
-        font-size: 2rem;
-        font-weight: 800;
-        margin: .1rem 0 .25rem;
-        letter-spacing: -.025em;
-    }
-
-    .page-subtitle {
-        color: var(--muted);
-        margin-bottom: 1rem;
-    }
+    .question-text { color: var(--ink); font-size: 1.02rem; font-weight: 700; margin-top: .22rem; }
 
     .insight {
-        background: #e8f8f5;
-        border: 1px solid #cbece7;
-        border-left: 5px solid var(--teal);
-        padding: .95rem 1rem;
-        border-radius: 12px;
-        color: #164e63;
-        margin: .7rem 0 1rem;
+        background: linear-gradient(135deg, #edf6f1, #f8fbf9);
+        border: 1px solid #d2e5dc;
+        border-left: 4px solid var(--green);
+        padding: 1rem 1.1rem;
+        border-radius: 15px;
+        color: #315c4e;
+        margin: .8rem 0 1rem;
+        box-shadow: 0 6px 18px rgba(35,79,66,.045);
     }
 
     .mini-card {
-        background: var(--card);
+        background: rgba(255,255,255,.94);
         border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 1rem;
-        box-shadow: 0 5px 18px rgba(7,59,76,.04);
+        border-radius: 18px;
+        padding: 1.05rem;
+        min-height: 130px;
+        box-shadow: 0 8px 24px rgba(35,79,66,.055);
     }
 
     .status {
         display: inline-block;
-        padding: .3rem .65rem;
+        padding: .32rem .7rem;
         border-radius: 999px;
-        background: #e8f8f5;
-        color: #11787a;
-        font-size: .78rem;
-        font-weight: 700;
-    }
-
-    .nav-note {
-        color: var(--muted);
-        font-size: .82rem;
-        margin: .25rem 0 1rem;
-    }
-
-    .footer {
-        text-align: center;
-        color: #789093;
-        padding: 1.2rem 0 .2rem;
-        font-size: .82rem;
+        background: #e5f1eb;
+        color: #356d59;
+        font-size: .76rem;
+        font-weight: 750;
     }
 
     div[data-testid="stMetric"] {
-        background: white;
+        background: rgba(255,255,255,.94);
         border: 1px solid var(--line);
-        padding: .9rem 1rem;
-        border-radius: 16px;
-        box-shadow: 0 5px 18px rgba(7,59,76,.04);
+        padding: 1rem 1.05rem;
+        border-radius: 17px;
+        box-shadow: 0 7px 22px rgba(35,79,66,.05);
     }
 
-    div[data-testid="stMetricLabel"] {
-        color: var(--muted);
-    }
+    div[data-testid="stMetricLabel"] { color: var(--muted); }
 
     .stButton > button {
-        width: 100%;
         border-radius: 12px;
-        border: 1px solid var(--line);
+        border: 1px solid #cddfd6;
         background: white;
         color: var(--ink);
-        font-weight: 650;
+        font-weight: 700;
     }
 
     .stButton > button:hover {
-        border-color: var(--teal);
-        color: var(--teal);
+        border-color: var(--green);
+        color: var(--green);
+        box-shadow: 0 4px 14px rgba(63,128,104,.10);
     }
 
+    div[data-testid="stRadio"] > div { gap: .35rem; }
+    div[data-testid="stRadio"] label {
+        background: rgba(255,255,255,.82);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: .42rem .65rem;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -199,6 +187,15 @@ st.markdown(
 # Data loading
 # ------------------------------------------------------------
 BASE_DIR = Path(__file__).resolve().parent
+
+MASCOT_CANDIDATES = [
+    BASE_DIR / "mascot.png",
+    BASE_DIR / "mascot.jpg",
+    BASE_DIR / "mascot.webp",
+    BASE_DIR / "assets" / "mascot.png",
+    BASE_DIR / "assets" / "mascot.webp",
+]
+MASCOT_PATH = next((p for p in MASCOT_CANDIDATES if p.exists()), None)
 
 POSSIBLE_DATA_FILES = [
     BASE_DIR / "Last mile Delivery Data.csv",
@@ -343,42 +340,38 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-st.sidebar.markdown("### Dashboard Filters")
-st.sidebar.caption("Use these filters to update every analysis page.")
+with st.expander("🎛️ Refine the dashboard", expanded=False):
+    st.caption("These controls update every analysis. Change a filter to investigate a specific segment.")
 
-selected_weather = st.sidebar.multiselect(
-    "🌦️ Weather", weather_options, default=weather_options
-)
-selected_traffic = st.sidebar.multiselect(
-    "🚦 Traffic", traffic_options, default=traffic_options
-)
-selected_vehicle = st.sidebar.multiselect(
-    "🚗 Vehicle Type", vehicle_options, default=vehicle_options
-)
-selected_category = st.sidebar.multiselect(
-    "📦 Product Category", category_options, default=category_options
-)
-selected_area = st.sidebar.multiselect(
-    "📍 Area", area_options, default=area_options
-)
+    f1, f2, f3, f4, f5 = st.columns(5)
+    with f1:
+        selected_weather = st.multiselect("🌦️ Weather", weather_options, default=weather_options, key="filter_weather")
+    with f2:
+        selected_traffic = st.multiselect("🚦 Traffic", traffic_options, default=traffic_options, key="filter_traffic")
+    with f3:
+        selected_vehicle = st.multiselect("🚗 Vehicle", vehicle_options, default=vehicle_options, key="filter_vehicle")
+    with f4:
+        selected_category = st.multiselect("📦 Category", category_options, default=category_options, key="filter_category")
+    with f5:
+        selected_area = st.multiselect("📍 Area", area_options, default=area_options, key="filter_area")
 
-min_date = df["Order_Date"].min().date()
-max_date = df["Order_Date"].max().date()
+    min_date = df["Order_Date"].min().date()
+    max_date = df["Order_Date"].max().date()
+    selected_dates = st.date_input(
+        "📅 Order Date Range", value=(min_date, max_date),
+        min_value=min_date, max_value=max_date, key="filter_dates"
+    )
+    if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
+        start_date, end_date = selected_dates
+    else:
+        start_date = end_date = selected_dates
 
-selected_dates = st.sidebar.date_input(
-    "📅 Order Date Range",
-    value=(min_date, max_date),
-    min_value=min_date,
-    max_value=max_date,
-)
+    if st.button("↻ Reset all filters", key="reset_filters"):
+        for key in ["filter_weather", "filter_traffic", "filter_vehicle", "filter_category", "filter_area", "filter_dates"]:
+            st.session_state.pop(key, None)
+        st.rerun()
 
-if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
-    start_date, end_date = selected_dates
-else:
-    start_date = end_date = selected_dates
-
-if st.sidebar.button("↻ Reset Filters"):
-    st.rerun()
+    st.markdown('<span class="status">● Filters apply to every page</span>', unsafe_allow_html=True)
 
 
 filtered = df[
@@ -429,6 +422,14 @@ def show_insight(text):
     )
 
 
+def show_question(text):
+    st.markdown(
+        f'<div class="question-box"><div class="question-label">Manager Question</div>'
+        f'<div class="question-text">{text}</div></div>',
+        unsafe_allow_html=True,
+    )
+
+
 def safe_corr(data, x, y):
     if len(data) < 2:
         return np.nan
@@ -436,7 +437,7 @@ def safe_corr(data, x, y):
 
 
 # ------------------------------------------------------------
-# Navigation
+# Navigation — top-level, not hidden at the bottom of the page.
 # ------------------------------------------------------------
 PAGES = [
     "🏠 Overview",
@@ -450,15 +451,44 @@ PAGES = [
     "⏱️ Pickup Efficiency",
 ]
 
-page = st.sidebar.radio("Navigate", PAGES, index=0)
+if "page" not in st.session_state:
+    st.session_state["page"] = "🏠 Overview"
 
-st.sidebar.markdown("---")
-st.sidebar.markdown(
-    f'<span class="status">● {len(filtered):,} records selected</span>',
-    unsafe_allow_html=True,
+page = st.radio(
+    "Navigation",
+    PAGES,
+    key="page",
+    horizontal=True,
+    label_visibility="collapsed",
 )
-st.sidebar.caption("All charts respond to the filters above.")
 
+if MASCOT_PATH:
+    mc1, mc2 = st.columns([7, 1])
+    with mc2:
+        st.image(str(MASCOT_PATH), width=105)
+else:
+    st.caption("💚 LogiSight Co-Pilot  •  Add `mascot.png` beside `app.py` to use your mascot image.")
+
+st.caption(f"**{len(filtered):,} deliveries selected**  •  Your filters stay active as you move between analyses.")
+
+
+# ------------------------------------------------------------
+# Dynamic filter-impact insight
+# ------------------------------------------------------------
+baseline_avg = df["Delivery_Time"].mean()
+selected_avg = filtered["Delivery_Time"].mean()
+
+if len(filtered) != len(df) and pd.notna(selected_avg) and pd.notna(baseline_avg):
+    change = ((selected_avg - baseline_avg) / baseline_avg) * 100 if baseline_avg else 0
+    direction = "higher" if change > 0 else "lower"
+    st.markdown(
+        f'<div class="insight"><b>Filter Impact:</b> Your current selection contains '
+        f'<b>{len(filtered):,}</b> of <b>{len(df):,}</b> deliveries. Its average delivery '
+        f'time is <b>{selected_avg:.1f} min</b>, <b>{abs(change):.1f}% {direction}</b> '
+        f'than the full dataset average of <b>{baseline_avg:.1f} min</b>. '
+        f'Every chart below now describes this selected segment.</div>',
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
 # OVERVIEW
@@ -545,6 +575,8 @@ elif page == "🌧️ Delay Analyzer":
         "How do weather and traffic conditions affect average delivery time?",
     )
 
+    show_question("How do weather and traffic conditions affect average delivery time?")
+
     q1 = (
         filtered.groupby(["Weather", "Traffic"], as_index=False)["Delivery_Time"]
         .mean()
@@ -593,6 +625,8 @@ elif page == "🚗 Vehicle Comparison":
         "Which vehicle type has the shortest average delivery time?",
     )
 
+    show_question("Which vehicle type has the shortest average delivery time?")
+
     q2 = (
         filtered.groupby("Vehicle", as_index=False)["Delivery_Time"]
         .agg(["mean", "count"])
@@ -639,6 +673,8 @@ elif page == "👤 Agent Performance":
         "Agent Performance",
         "How do agent rating and age relate to delivery time?",
     )
+
+    show_question("How do agent rating and age relate to delivery time?")
 
     agent_df = filtered.dropna(
         subset=["Agent_Rating", "Agent_Age", "Delivery_Time", "Agent_Age_Group"]
@@ -693,6 +729,8 @@ elif page == "🗺️ Area Analysis":
         "Which areas have the highest average delivery times?",
     )
 
+    show_question("Which areas have the highest average delivery times?")
+
     q4 = (
         filtered.groupby("Area", as_index=False)["Delivery_Time"]
         .agg(["mean", "count"])
@@ -738,6 +776,8 @@ elif page == "📦 Category Analysis":
         "Category Analysis",
         "Which categories have the highest and most variable delivery times?",
     )
+
+    show_question("Which categories have the highest and most variable delivery times?")
 
     q5 = filtered.dropna(subset=["Category", "Delivery_Time"]).copy()
 
@@ -804,6 +844,8 @@ elif page == "🕐 Time-of-Day":
         "Does the time of day when an order is placed influence delivery performance?",
     )
 
+    show_question("Does the time of day when an order is placed influence delivery performance?")
+
     tod_order = ["Night", "Morning", "Afternoon", "Evening"]
 
     tod_stats = (
@@ -853,6 +895,8 @@ elif page == "📍 Distance Analyzer":
         "Does delivery distance correspond to delivery time?",
     )
 
+    show_question("Does delivery distance correspond to delivery time?")
+
     distance_df = filtered.dropna(
         subset=["Delivery_Distance", "Delivery_Time"]
     ).copy()
@@ -901,6 +945,8 @@ elif page == "⏱️ Pickup Efficiency":
         "Pickup Efficiency Analyzer",
         "Does pickup duration influence the overall delivery time?",
     )
+
+    show_question("Does pickup duration influence the overall delivery time?")
 
     pickup_df = filtered.dropna(
         subset=["Pickup_Duration", "Delivery_Time"]
