@@ -1,206 +1,423 @@
-
 from pathlib import Path
-
 import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-
 # ============================================================
 # LOGISIGHT — LAST-MILE DELIVERY INTELLIGENCE
-# FA-2 Dashboard
 # ============================================================
 
 st.set_page_config(
     page_title="LogiSight | Delivery Intelligence",
     page_icon="🚚",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="collapsed",
 )
 
-# ------------------------------------------------------------
-# UI / UX
-# ------------------------------------------------------------
-st.markdown(
-    """
-    <style>
-    :root {
-        --ink: #073b4c;
-        --muted: #638084;
-        --teal: #159a9c;
-        --mint: #dff7f3;
-        --line: #d8ebe8;
-        --bg: #f6fbfa;
-        --card: #ffffff;
-    }
+# ------------------------- PREMIUM UI ------------------------
+st.markdown("""
+<style>
+:root{
+    --bg:#120f10;
+    --panel:#1d1819;
+    --panel2:#241d1f;
+    --burgundy:#7b2946;
+    --burgundy2:#9f3d5d;
+    --forest:#315b4d;
+    --sage:#6f9a86;
+    --champagne:#c8aa73;
+    --cream:#f3eee6;
+    --muted:#a99f99;
+    --line:#3a3032;
+    --gold:#c8aa73;
+}
 
-    .stApp {
-        background: var(--bg);
-    }
+.stApp{
+    background:
+      radial-gradient(circle at 78% 4%,rgba(159,61,93,.20),transparent 25%),
+      radial-gradient(circle at 15% 30%,rgba(49,91,77,.14),transparent 28%),
+      linear-gradient(135deg,#0f0d0e 0%,#171213 52%,#120f10 100%);
+    color:var(--cream);
+}
 
-    .block-container {
-        max-width: 1400px;
-        padding-top: 1.2rem;
-        padding-bottom: 3rem;
-    }
+/* Extra top spacing so Streamlit's top toolbar does not cover the app */
+.block-container{
+    max-width:1580px;
+    padding:6rem 1.25rem 3rem;
+}
 
-    [data-testid="stSidebar"] {
-        background: #ffffff;
-        border-right: 1px solid var(--line);
-    }
+[data-testid="column"]{
+    min-width:0;
+}
 
-    [data-testid="stSidebar"] .block-container {
-        padding-top: 1.5rem;
-    }
+/* Luxury three-panel shell */
+.rail,
+.filter-panel{
+    background:linear-gradient(
+        160deg,
+        rgba(36,29,31,.96),
+        rgba(27,22,23,.96)
+    );
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:0 20px 55px rgba(0,0,0,.28);
+}
 
-    .brand {
-        padding: 1rem 1.1rem;
-        border-radius: 18px;
-        background: linear-gradient(135deg, #073b4c, #159a9c);
-        color: white;
-        margin-bottom: 1.1rem;
-        box-shadow: 0 8px 24px rgba(7,59,76,.12);
-    }
+.rail{
+    padding:1rem;
+    position:sticky;
+    top:5.5rem;
+}
 
-    .brand-title {
-        font-size: 1.35rem;
-        font-weight: 800;
-        letter-spacing: .03em;
-    }
+.brand{
+    background:
+        linear-gradient(
+            145deg,
+            #5d1e35 0%,
+            #7b2946 55%,
+            #315b4d 140%
+        );
+    color:#fff;
+    border:1px solid rgba(200,170,115,.22);
+    border-radius:18px;
+    padding:1rem;
+    box-shadow:0 14px 30px rgba(0,0,0,.25);
+    margin-bottom:1rem;
+}
 
-    .brand-subtitle {
-        opacity: .85;
-        font-size: .82rem;
-        margin-top: .15rem;
-    }
+.brand-name{
+    font-size:1.35rem;
+    font-weight:900;
+    letter-spacing:.10em;
+}
 
-    .hero {
-        padding: 1.6rem 1.8rem;
-        border-radius: 22px;
-        background:
-            radial-gradient(circle at 90% 15%, rgba(21,154,156,.18), transparent 28%),
-            linear-gradient(135deg, #e2f8f4 0%, #ffffff 70%);
-        border: 1px solid var(--line);
-        box-shadow: 0 8px 28px rgba(7,59,76,.06);
-        margin-bottom: 1.2rem;
-    }
+.brand-sub{
+    font-size:.62rem;
+    letter-spacing:.14em;
+    opacity:.78;
+    margin-top:.2rem;
+}
 
-    .hero h1 {
-        color: var(--ink);
-        margin: 0;
-        font-size: 2.45rem;
-        font-weight: 800;
-        letter-spacing: -.03em;
-    }
+.rail-heading{
+    color:#d7c9b7;
+    font-size:.68rem;
+    font-weight:850;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    margin:.95rem 0 .5rem;
+}
 
-    .hero p {
-        color: var(--muted);
-        margin: .45rem 0 0;
-        font-size: 1.02rem;
-    }
+.guide{
+    color:#b7ada7;
+    font-size:.76rem;
+    line-height:1.52;
+    background:rgba(255,255,255,.025);
+    border:1px solid #342b2d;
+    border-radius:14px;
+    padding:.8rem;
+}
 
-    .eyebrow {
-        color: var(--teal);
-        font-size: .76rem;
-        font-weight: 800;
-        letter-spacing: .13em;
-        text-transform: uppercase;
-        margin-bottom: .35rem;
-    }
+.filter-panel{
+    padding:1rem;
+    margin-bottom:.75rem;
+}
 
-    .page-title {
-        color: var(--ink);
-        font-size: 2rem;
-        font-weight: 800;
-        margin: .1rem 0 .25rem;
-        letter-spacing: -.025em;
-    }
+.filter-title{
+    color:var(--cream);
+    font-size:1.02rem;
+    font-weight:850;
+}
 
-    .page-subtitle {
-        color: var(--muted);
-        margin-bottom: 1rem;
-    }
+.filter-sub{
+    color:var(--muted);
+    font-size:.72rem;
+    margin:.15rem 0 .8rem;
+}
 
-    .insight {
-        background: #e8f8f5;
-        border: 1px solid #cbece7;
-        border-left: 5px solid var(--teal);
-        padding: .95rem 1rem;
-        border-radius: 12px;
-        color: #164e63;
-        margin: .7rem 0 1rem;
-    }
+/* ---------------- MAIN CONTENT ---------------- */
 
-    .mini-card {
-        background: var(--card);
-        border: 1px solid var(--line);
-        border-radius: 16px;
-        padding: 1rem;
-        box-shadow: 0 5px 18px rgba(7,59,76,.04);
-    }
+.hero{
+    padding:1.85rem 2rem;
+    border:1px solid #433538;
+    border-radius:26px;
+    background:
+      radial-gradient(
+          circle at 88% 20%,
+          rgba(159,61,93,.24),
+          transparent 26%
+      ),
+      linear-gradient(
+          135deg,
+          #2a2022 0%,
+          #211a1c 72%
+      );
+    box-shadow:0 18px 50px rgba(0,0,0,.26);
+    margin-bottom:1.15rem;
+}
 
-    .status {
-        display: inline-block;
-        padding: .3rem .65rem;
-        border-radius: 999px;
-        background: #e8f8f5;
-        color: #11787a;
-        font-size: .78rem;
-        font-weight: 700;
-    }
+.hero h1{
+    margin:0;
+    color:#f5efe7;
+    font-size:2.45rem;
+    font-weight:900;
+    letter-spacing:-.045em;
+}
 
-    .nav-note {
-        color: var(--muted);
-        font-size: .82rem;
-        margin: .25rem 0 1rem;
-    }
+.hero p{
+    margin:.45rem 0 0;
+    color:#aaa09a;
+    font-size:1rem;
+    max-width:760px;
+}
 
-    .footer {
-        text-align: center;
-        color: #789093;
-        padding: 1.2rem 0 .2rem;
-        font-size: .82rem;
-    }
+.eyebrow{
+    color:var(--champagne);
+    font-size:.64rem;
+    font-weight:900;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+}
 
-    div[data-testid="stMetric"] {
-        background: white;
-        border: 1px solid var(--line);
-        padding: .9rem 1rem;
-        border-radius: 16px;
-        box-shadow: 0 5px 18px rgba(7,59,76,.04);
-    }
+.page-title{
+    color:#f4eee6;
+    font-size:2rem;
+    font-weight:900;
+    letter-spacing:-.035em;
+    margin:.18rem 0 .3rem;
+}
 
-    div[data-testid="stMetricLabel"] {
-        color: var(--muted);
-    }
+.page-subtitle{
+    color:#aaa09a;
+    font-size:.96rem;
+    margin-bottom:1.15rem;
+}
 
-    .stButton > button {
-        width: 100%;
-        border-radius: 12px;
-        border: 1px solid var(--line);
-        background: white;
-        color: var(--ink);
-        font-weight: 650;
-    }
+.question{
+    background:
+        linear-gradient(
+            135deg,
+            #21191b,
+            #1c1718
+        );
+    border:1px solid #3b3032;
+    border-radius:16px;
+    padding:.9rem 1rem;
+    margin:.7rem 0 1.7rem;
+    box-shadow:0 8px 24px rgba(0,0,0,.18);
+}
 
-    .stButton > button:hover {
-        border-color: var(--teal);
-        color: var(--teal);
-    }
+.question-label{
+    color:var(--champagne);
+    font-size:.61rem;
+    font-weight:900;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+}
 
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
+.question-text{
+    color:#eee7df;
+    font-size:1rem;
+    font-weight:750;
+    margin-top:.22rem;
+}
+
+.insight{
+    background:
+        linear-gradient(
+            135deg,
+            #241b1e,
+            #1b1718
+        );
+    border:1px solid #493238;
+    border-left:4px solid var(--burgundy2);
+    border-radius:14px;
+    padding:.9rem 1rem;
+    margin:.95rem 0;
+    color:#d8cec7;
+    box-shadow:0 8px 22px rgba(0,0,0,.18);
+}
+
+.impact{
+    background:
+        linear-gradient(
+            135deg,
+            #302127,
+            #211a1c
+        );
+    border:1px solid #54353e;
+    border-left:5px solid var(--champagne);
+    border-radius:15px;
+    padding:.95rem 1rem;
+    margin-bottom:1.1rem;
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+}
+
+.impact-title{
+    color:var(--champagne);
+    font-size:.66rem;
+    font-weight:900;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+}
+
+.impact-main{
+    color:#f0e8df;
+    font-weight:750;
+    margin-top:.28rem;
+}
+
+.impact-small{
+    color:#a99f99;
+    font-size:.75rem;
+    margin-top:.2rem;
+}
+
+.pill{
+    display:inline-block;
+    background:rgba(123,41,70,.18);
+    color:#d7b9c3;
+    border:1px solid #573342;
+    border-radius:999px;
+    padding:.28rem .65rem;
+    font-size:.68rem;
+    font-weight:800;
+    margin-bottom:.65rem;
+}
+
+/* ---------------- KPI CARDS ---------------- */
+
+div[data-testid="stMetric"]{
+    background:
+        linear-gradient(
+            145deg,
+            #211a1c,
+            #1b1718
+        );
+    border:1px solid #393033;
+    border-radius:16px;
+    box-shadow:0 10px 26px rgba(0,0,0,.20);
+    padding:.85rem;
+}
+
+div[data-testid="stMetric"] label{
+    color:#9f9691!important;
+}
+
+div[data-testid="stMetric"] [data-testid="stMetricValue"]{
+    color:#f3eee6!important;
+}
+
+/* ---------------- BUTTONS ---------------- */
+
+.stButton>button{
+    border-radius:11px;
+    border:1px solid #46383b;
+    background:#211a1c;
+    color:#e9e1d9;
+    font-weight:700;
+    transition:.2s ease;
+}
+
+.stButton>button:hover{
+    border-color:var(--champagne);
+    color:#f0d9a5;
+    background:#292022;
+}
+
+div[data-testid="column"] .stButton>button{
+    min-height:2.45rem;
+}
+
+.stButton>button[kind="primary"]{
+    background:
+        linear-gradient(
+            135deg,
+            #6e233e,
+            #922f50
+        )!important;
+    border:1px solid #b05a76!important;
+    color:#fff!important;
+    box-shadow:0 8px 20px rgba(123,41,70,.28);
+}
+
+/* ---------------- FILTERS ---------------- */
+
+[data-testid="stForm"]{
+    border:0!important;
+    padding:0!important;
+}
+
+[data-testid="stMultiSelect"],
+[data-testid="stDateInput"]{
+    margin-bottom:.2rem;
+}
+
+.stMultiSelect div[data-baseweb="select"]>div,
+.stDateInput input{
+    background:#191516!important;
+    border-color:#403437!important;
+    color:#eee7df!important;
+}
+
+.stMultiSelect div[data-baseweb="select"] span{
+    color:#e8ddd5!important;
+}
+
+.stCaption,
+.small-note{
+    color:#8f8783!important;
+    font-size:.73rem;
+}
+
+/* ---------------- FOOTER ---------------- */
+
+.footer{
+    text-align:center;
+    color:#706866;
+    font-size:.72rem;
+    padding-top:1.25rem;
+    letter-spacing:.05em;
+}
+
+/* ---------------- PLOTLY ---------------- */
+
+/* More breathing room above graph title */
+.plotly-chart-container{
+    margin-top:.25rem;
+    padding-top:.25rem;
+}
+
+.js-plotly-plot{
+    border:1px solid #342b2d;
+    border-radius:18px;
+    overflow:hidden;
+    background:#1b1718;
+}
+</style>
+""", unsafe_allow_html=True)
 
 
-# ------------------------------------------------------------
-# Data loading
-# ------------------------------------------------------------
+# ============================================================
+# PATHS
+# ============================================================
+
 BASE_DIR = Path(__file__).resolve().parent
 
-POSSIBLE_DATA_FILES = [
+MASCOT_CANDIDATES = [
+    BASE_DIR / "mascot.png",
+    BASE_DIR / "mascot.jpg",
+    BASE_DIR / "mascot.webp",
+    BASE_DIR / "assets" / "mascot.png",
+    BASE_DIR / "assets" / "mascot.webp",
+]
+
+MASCOT_PATH = next(
+    (p for p in MASCOT_CANDIDATES if p.exists()),
+    None
+)
+
+DATA_FILES = [
     BASE_DIR / "Last mile Delivery Data.csv",
     BASE_DIR / "data" / "Last mile Delivery Data.csv",
     BASE_DIR / "last_mile_delivery_data.csv",
@@ -208,236 +425,284 @@ POSSIBLE_DATA_FILES = [
 ]
 
 
+# ============================================================
+# LOAD DATA
+# ============================================================
+
 @st.cache_data
 def load_data():
-    data_file = next((p for p in POSSIBLE_DATA_FILES if p.exists()), None)
-    if data_file is None:
+
+    path = next(
+        (p for p in DATA_FILES if p.exists()),
+        None
+    )
+
+    if path is None:
         return None, None
-    return pd.read_csv(data_file), data_file.name
+
+    return pd.read_csv(path), path.name
 
 
-def clean_and_prepare(raw_df):
-    df = raw_df.copy()
+# ============================================================
+# DATA PREPARATION
+# ============================================================
+
+def prepare(raw):
+
+    df = raw.copy()
+
     df.columns = df.columns.str.strip()
 
-    text_cols = [
-        "Order_ID", "Weather", "Traffic", "Vehicle", "Area", "Category"
-    ]
-    for col in text_cols:
-        if col in df.columns:
-            df[col] = df[col].astype("string").str.strip()
+    for c in [
+        "Order_ID",
+        "Weather",
+        "Traffic",
+        "Vehicle",
+        "Area",
+        "Category"
+    ]:
+        df[c] = (
+            df[c]
+            .astype("string")
+            .str.strip()
+        )
 
-    numeric_cols = [
-        "Agent_Age", "Agent_Rating", "Store_Latitude", "Store_Longitude",
-        "Drop_Latitude", "Drop_Longitude", "Delivery_Time"
-    ]
-    for col in numeric_cols:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors="coerce")
+    for c in [
+        "Agent_Age",
+        "Agent_Rating",
+        "Store_Latitude",
+        "Store_Longitude",
+        "Drop_Latitude",
+        "Drop_Longitude",
+        "Delivery_Time"
+    ]:
+        df[c] = pd.to_numeric(
+            df[c],
+            errors="coerce"
+        )
 
-    df["Order_Date"] = pd.to_datetime(df["Order_Date"], errors="coerce")
+    df["Order_Date"] = pd.to_datetime(
+        df["Order_Date"],
+        errors="coerce"
+    )
 
-    order_date_text = df["Order_Date"].dt.strftime("%Y-%m-%d")
+    date_txt = df["Order_Date"].dt.strftime(
+        "%Y-%m-%d"
+    )
+
     df["Order_DateTime"] = pd.to_datetime(
-        order_date_text + " " + df["Order_Time"].astype("string").str.strip(),
-        errors="coerce",
+        date_txt
+        + " "
+        + df["Order_Time"].astype("string").str.strip(),
+        errors="coerce"
     )
+
     df["Pickup_DateTime"] = pd.to_datetime(
-        order_date_text + " " + df["Pickup_Time"].astype("string").str.strip(),
-        errors="coerce",
+        date_txt
+        + " "
+        + df["Pickup_Time"].astype("string").str.strip(),
+        errors="coerce"
     )
 
-    df = df.dropna(subset=["Delivery_Time"]).copy()
-    df = df[df["Delivery_Time"] >= 0].copy()
+    # Remove invalid delivery times
+    df = df.dropna(
+        subset=["Delivery_Time"]
+    ).copy()
 
-    # Time of day
-    df["Order_Hour"] = df["Order_DateTime"].dt.hour
+    df = df[
+        df["Delivery_Time"] >= 0
+    ].copy()
 
-    def get_time_of_day(hour):
-        if pd.isna(hour):
+    # ========================================================
+    # TIME OF DAY
+    # ========================================================
+
+    df["Order_Hour"] = (
+        df["Order_DateTime"].dt.hour
+    )
+
+    def tod(h):
+
+        if pd.isna(h):
             return "Unknown"
-        hour = int(hour)
-        if hour <= 5:
+
+        h = int(h)
+
+        if h <= 5:
             return "Night"
-        if hour <= 11:
+
+        if h <= 11:
             return "Morning"
-        if hour <= 16:
+
+        if h <= 16:
             return "Afternoon"
+
         return "Evening"
 
-    df["Time_of_Day"] = df["Order_Hour"].apply(get_time_of_day)
+    df["Time_of_Day"] = (
+        df["Order_Hour"].apply(tod)
+    )
 
-    # Pickup duration
+    # ========================================================
+    # PICKUP DURATION
+    # ========================================================
+
     df["Pickup_Duration"] = (
-        df["Pickup_DateTime"] - df["Order_DateTime"]
+        df["Pickup_DateTime"]
+        - df["Order_DateTime"]
     ).dt.total_seconds() / 60
-    df.loc[df["Pickup_Duration"] < 0, "Pickup_Duration"] = np.nan
 
-    # Haversine distance
-    coordinate_mask = df[
-        ["Store_Latitude", "Store_Longitude",
-         "Drop_Latitude", "Drop_Longitude"]
-    ].notna().all(axis=1)
+    df.loc[
+        df["Pickup_Duration"] < 0,
+        "Pickup_Duration"
+    ] = np.nan
+
+    # ========================================================
+    # DELIVERY DISTANCE — HAVERSINE
+    # ========================================================
 
     df["Delivery_Distance"] = np.nan
 
-    lat1 = np.radians(df.loc[coordinate_mask, "Store_Latitude"])
-    lon1 = np.radians(df.loc[coordinate_mask, "Store_Longitude"])
-    lat2 = np.radians(df.loc[coordinate_mask, "Drop_Latitude"])
-    lon2 = np.radians(df.loc[coordinate_mask, "Drop_Longitude"])
+    mask = df[
+        [
+            "Store_Latitude",
+            "Store_Longitude",
+            "Drop_Latitude",
+            "Drop_Longitude"
+        ]
+    ].notna().all(axis=1)
+
+    lat1 = np.radians(
+        df.loc[mask, "Store_Latitude"]
+    )
+
+    lon1 = np.radians(
+        df.loc[mask, "Store_Longitude"]
+    )
+
+    lat2 = np.radians(
+        df.loc[mask, "Drop_Latitude"]
+    )
+
+    lon2 = np.radians(
+        df.loc[mask, "Drop_Longitude"]
+    )
 
     dlat = lat2 - lat1
     dlon = lon2 - lon1
+
     a = (
         np.sin(dlat / 2) ** 2
-        + np.cos(lat1) * np.cos(lat2) * np.sin(dlon / 2) ** 2
-    )
-    df.loc[coordinate_mask, "Delivery_Distance"] = (
-        6371.0 * 2 * np.arcsin(np.sqrt(a))
+        + np.cos(lat1)
+        * np.cos(lat2)
+        * np.sin(dlon / 2) ** 2
     )
 
-    # Agent age groups
+    df.loc[
+        mask,
+        "Delivery_Distance"
+    ] = (
+        6371
+        * 2
+        * np.arcsin(np.sqrt(a))
+    )
+
+    # ========================================================
+    # AGE GROUP
+    # ========================================================
+
     df["Agent_Age_Group"] = pd.cut(
         df["Agent_Age"],
-        bins=[-np.inf, 24, 40, np.inf],
-        labels=["<25", "25–40", "40+"],
+        [-np.inf, 24, 40, np.inf],
+        labels=[
+            "<25",
+            "25–40",
+            "40+"
+        ]
     )
 
-    # FA-2 late-delivery rule
-    delivery_mean = df["Delivery_Time"].mean()
-    delivery_std = df["Delivery_Time"].std()
-    late_threshold = delivery_mean + delivery_std
-    df["Late_Delivery"] = df["Delivery_Time"] > late_threshold
+    # ========================================================
+    # LATE DELIVERY
+    # ========================================================
 
-    return df, late_threshold
+    threshold = (
+        df["Delivery_Time"].mean()
+        + df["Delivery_Time"].std()
+    )
+
+    df["Late_Delivery"] = (
+        df["Delivery_Time"] > threshold
+    )
+
+    return df, threshold
 
 
-raw_df, data_file_name = load_data()
+# ============================================================
+# INITIALIZE DATA
+# ============================================================
 
-if raw_df is None:
+raw, filename = load_data()
+
+if raw is None:
+
     st.error(
-        "Dataset not found. Upload 'Last mile Delivery Data.csv' "
-        "in the same GitHub folder as app.py or inside /data."
+        "Dataset not found. Put "
+        "'Last mile Delivery Data.csv' "
+        "beside app.py or inside /data."
     )
+
     st.stop()
 
-df, late_threshold = clean_and_prepare(raw_df)
+df, late_threshold = prepare(raw)
 
 
-# ------------------------------------------------------------
-# Filters
-# ------------------------------------------------------------
-weather_options = sorted(df["Weather"].dropna().unique().tolist())
-traffic_options = sorted(df["Traffic"].dropna().unique().tolist())
-vehicle_options = sorted(df["Vehicle"].dropna().unique().tolist())
-category_options = sorted(df["Category"].dropna().unique().tolist())
-area_options = sorted(df["Area"].dropna().unique().tolist())
+# ============================================================
+# FILTER OPTIONS
+# ============================================================
 
-st.sidebar.markdown(
-    """
-    <div class="brand">
-        <div class="brand-title">🚚 LOGISIGHT</div>
-        <div class="brand-subtitle">Last-Mile Delivery Intelligence</div>
-    </div>
-    """,
-    unsafe_allow_html=True,
+weather_options = sorted(
+    df["Weather"]
+    .dropna()
+    .unique()
+    .tolist()
 )
 
-st.sidebar.markdown("### Dashboard Filters")
-st.sidebar.caption("Use these filters to update every analysis page.")
+traffic_options = sorted(
+    df["Traffic"]
+    .dropna()
+    .unique()
+    .tolist()
+)
 
-selected_weather = st.sidebar.multiselect(
-    "🌦️ Weather", weather_options, default=weather_options
+vehicle_options = sorted(
+    df["Vehicle"]
+    .dropna()
+    .unique()
+    .tolist()
 )
-selected_traffic = st.sidebar.multiselect(
-    "🚦 Traffic", traffic_options, default=traffic_options
+
+category_options = sorted(
+    df["Category"]
+    .dropna()
+    .unique()
+    .tolist()
 )
-selected_vehicle = st.sidebar.multiselect(
-    "🚗 Vehicle Type", vehicle_options, default=vehicle_options
-)
-selected_category = st.sidebar.multiselect(
-    "📦 Product Category", category_options, default=category_options
-)
-selected_area = st.sidebar.multiselect(
-    "📍 Area", area_options, default=area_options
+
+area_options = sorted(
+    df["Area"]
+    .dropna()
+    .unique()
+    .tolist()
 )
 
 min_date = df["Order_Date"].min().date()
 max_date = df["Order_Date"].max().date()
 
-selected_dates = st.sidebar.date_input(
-    "📅 Order Date Range",
-    value=(min_date, max_date),
-    min_value=min_date,
-    max_value=max_date,
-)
 
-if isinstance(selected_dates, tuple) and len(selected_dates) == 2:
-    start_date, end_date = selected_dates
-else:
-    start_date = end_date = selected_dates
+# ============================================================
+# NAVIGATION
+# ============================================================
 
-if st.sidebar.button("↻ Reset Filters"):
-    st.rerun()
-
-
-filtered = df[
-    df["Weather"].isin(selected_weather)
-    & df["Traffic"].isin(selected_traffic)
-    & df["Vehicle"].isin(selected_vehicle)
-    & df["Category"].isin(selected_category)
-    & df["Area"].isin(selected_area)
-    & (df["Order_Date"].dt.date >= start_date)
-    & (df["Order_Date"].dt.date <= end_date)
-].copy()
-
-
-# ------------------------------------------------------------
-# Plot helper
-# ------------------------------------------------------------
-def polish(fig, height=500):
-    fig.update_layout(
-        height=height,
-        template="plotly_white",
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(255,255,255,0)",
-        font=dict(color="#073b4c"),
-        margin=dict(l=25, r=25, t=45, b=25),
-        hoverlabel=dict(bgcolor="white"),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
-    )
-    fig.update_xaxes(showgrid=False, linecolor="#d8ebe8")
-    fig.update_yaxes(gridcolor="#e7f0ee", zeroline=False)
-    return fig
-
-
-def show_header(eyebrow, title, subtitle):
-    st.markdown(
-        f"""
-        <div class="eyebrow">{eyebrow}</div>
-        <div class="page-title">{title}</div>
-        <div class="page-subtitle">{subtitle}</div>
-        """,
-        unsafe_allow_html=True,
-    )
-
-
-def show_insight(text):
-    st.markdown(
-        f'<div class="insight"><b>Key Insight:</b> {text}</div>',
-        unsafe_allow_html=True,
-    )
-
-
-def safe_corr(data, x, y):
-    if len(data) < 2:
-        return np.nan
-    return data[x].corr(data[y])
-
-
-# ------------------------------------------------------------
-# Navigation
-# ------------------------------------------------------------
 PAGES = [
     "🏠 Overview",
     "🌧️ Delay Analyzer",
@@ -447,503 +712,1550 @@ PAGES = [
     "📦 Category Analysis",
     "🕐 Time-of-Day",
     "📍 Distance Analyzer",
-    "⏱️ Pickup Efficiency",
+    "⏱️ Pickup Efficiency"
 ]
 
-page = st.sidebar.radio("Navigate", PAGES, index=0)
+if "page" not in st.session_state:
 
-st.sidebar.markdown("---")
-st.sidebar.markdown(
-    f'<span class="status">● {len(filtered):,} records selected</span>',
-    unsafe_allow_html=True,
+    st.session_state.page = PAGES[0]
+
+
+# ============================================================
+# FILTER SESSION STATE
+# ============================================================
+
+if "filters" not in st.session_state:
+
+    st.session_state.filters = {
+        "weather": weather_options,
+        "traffic": traffic_options,
+        "vehicle": vehicle_options,
+        "category": category_options,
+        "area": area_options,
+        "start": min_date,
+        "end": max_date
+    }
+
+
+# ============================================================
+# THREE-COLUMN LAYOUT
+# ============================================================
+
+left, center, right = st.columns(
+    [1.02, 2.45, 0.92],
+    gap="large"
 )
-st.sidebar.caption("All charts respond to the filters above.")
 
 
 # ============================================================
-# OVERVIEW
+# LEFT PANEL
 # ============================================================
-if page == "🏠 Overview":
+
+with left:
+
     st.markdown(
-        """
-        <div class="hero">
-            <div class="eyebrow">LOGISTICS PERFORMANCE DASHBOARD</div>
-            <h1>LogiSight Delivery Intelligence</h1>
-            <p>Turn last-mile delivery data into clear operational decisions.</p>
-        </div>
-        """,
-        unsafe_allow_html=True,
+        '<div class="brand">'
+        '<div class="brand-name">LOGISIGHT</div>'
+        '<div class="brand-sub">'
+        'LAST-MILE DELIVERY INTELLIGENCE'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="rail-heading">'
+        'Navigation'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    for i, name in enumerate(PAGES):
+
+        active = (
+            st.session_state.page == name
+        )
+
+        if st.button(
+            ("● " if active else "") + name,
+            key=f"nav_{i}",
+            use_container_width=True,
+            type=(
+                "primary"
+                if active
+                else "secondary"
+            )
+        ):
+
+            st.session_state.page = name
+            st.rerun()
+
+    st.markdown(
+        '<div class="rail-heading">'
+        'Manager workflow'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="guide">'
+        '<b>1</b> Choose a business question.'
+        '<br><br>'
+        '<b>2</b> Refine the segment on the right.'
+        '<br><br>'
+        '<b>3</b> Click <b>Apply filters</b>.'
+        '<br><br>'
+        '<b>4</b> Read the before → after impact.'
+        '<br><br>'
+        '<b>5</b> Use the graph to support a decision.'
+        '</div>',
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        '<div class="rail-heading">'
+        'Dashboard status'
+        '</div>',
+        unsafe_allow_html=True
     )
 
     st.caption(
-        f"Source: {data_file_name}  •  "
-        f"{len(df):,} cleaned records  •  "
-        f"{len(filtered):,} records in current selection"
+        f"Dataset: {len(df):,} cleaned records"
     )
 
-    st.markdown("### 📌 Performance Snapshot")
-
-    avg_delivery = filtered["Delivery_Time"].mean()
-    delivery_count = len(filtered)
-    late_pct = filtered["Late_Delivery"].mean() * 100 if delivery_count else 0
-    avg_pickup = filtered["Pickup_Duration"].mean()
-    avg_distance = filtered["Delivery_Distance"].mean()
-
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric("Average Delivery", f"{avg_delivery:.1f} min" if pd.notna(avg_delivery) else "N/A")
-    k2.metric("Total Deliveries", f"{delivery_count:,}")
-    k3.metric("Late Deliveries", f"{late_pct:.1f}%")
-    k4.metric("Late Threshold", f"{late_threshold:.1f} min")
-
-    st.markdown("### 🔎 Explore the Analysis")
-
-    cards = [
-        ("🌧️", "Delay Analyzer", "Weather × traffic and delivery delays.", "🌧️ Delay Analyzer"),
-        ("🚗", "Vehicle Comparison", "Compare average delivery time by vehicle.", "🚗 Vehicle Comparison"),
-        ("👤", "Agent Performance", "Explore rating, age and delivery time.", "👤 Agent Performance"),
-        ("🗺️", "Area Analysis", "Find areas with the highest average time.", "🗺️ Area Analysis"),
-        ("📦", "Category Analysis", "Compare distributions and variability.", "📦 Category Analysis"),
-        ("🕐", "Time-of-Day", "See how order timing affects performance.", "🕐 Time-of-Day"),
-        ("📍", "Distance Analyzer", "Check distance versus delivery time.", "📍 Distance Analyzer"),
-        ("⏱️", "Pickup Efficiency", "Explore pickup duration versus delivery time.", "⏱️ Pickup Efficiency"),
-    ]
-
-    cols = st.columns(4)
-    for i, (icon, title, desc, target) in enumerate(cards):
-        with cols[i % 4]:
-            st.markdown(
-                f"""
-                <div class="mini-card">
-                    <div style="font-size:1.7rem">{icon}</div>
-                    <div style="font-weight:800;color:#073b4c;margin:.35rem 0">{title}</div>
-                    <div style="font-size:.83rem;color:#638084">{desc}</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
-            if st.button("Open analysis", key=f"open_{i}"):
-                st.session_state["page"] = target
-                st.rerun()
-
-    # The radio is the actual navigation control. Keep the cards informative.
-    st.markdown("---")
-    st.markdown("### 💡 How to use LogiSight")
-    st.info(
-        "Start with the Performance Snapshot, then use the left navigation to "
-        "open one analysis at a time. Filters stay active across all pages, "
-        "so you can investigate the same selected segment from different angles."
+    st.caption(
+        f"Current view: {len(df):,} records before filters"
     )
 
+    # ========================================================
+    # MASCOT
+    # ========================================================
 
-# ============================================================
-# Q1 — DELAY ANALYZER
-# ============================================================
-elif page == "🌧️ Delay Analyzer":
-    show_header(
-        "QUESTION 01",
-        "Delay Analyzer",
-        "How do weather and traffic conditions affect average delivery time?",
-    )
+    if MASCOT_PATH:
 
-    q1 = (
-        filtered.groupby(["Weather", "Traffic"], as_index=False)["Delivery_Time"]
-        .mean()
-        .rename(columns={"Delivery_Time": "Average_Delivery_Time"})
-    )
+        st.markdown(
+            '<div class="rail-heading">'
+            'Your co-pilot'
+            '</div>',
+            unsafe_allow_html=True
+        )
 
-    if q1.empty:
-        st.warning("No data matches the current filters.")
+        st.image(
+            str(MASCOT_PATH),
+            use_container_width=True
+        )
+
     else:
-        fig = px.bar(
-            q1,
-            x="Weather",
-            y="Average_Delivery_Time",
-            color="Traffic",
-            barmode="group",
-            text_auto=".1f",
-            labels={
-                "Weather": "Weather Condition",
-                "Average_Delivery_Time": "Average Delivery Time (minutes)",
-                "Traffic": "Traffic Condition",
-            },
-            title="Average Delivery Time by Weather and Traffic",
-        )
-        fig = polish(fig, 540)
-        st.plotly_chart(fig, use_container_width=True)
 
-        worst = q1.loc[q1["Average_Delivery_Time"].idxmax()]
-        fastest = q1.loc[q1["Average_Delivery_Time"].idxmin()]
-        show_insight(
-            f"The slowest filtered combination is <b>{worst['Weather']}</b> weather "
-            f"with <b>{worst['Traffic']}</b> traffic at "
-            f"<b>{worst['Average_Delivery_Time']:.1f} minutes</b>. "
-            f"The fastest is <b>{fastest['Weather']}</b> + "
-            f"<b>{fastest['Traffic']}</b> at "
-            f"<b>{fastest['Average_Delivery_Time']:.1f} minutes</b>."
+        st.caption(
+            "Mascot ready: add `mascot.png` beside `app.py`."
         )
 
 
 # ============================================================
-# Q2 — VEHICLE
+# RIGHT FILTER PANEL
 # ============================================================
-elif page == "🚗 Vehicle Comparison":
-    show_header(
-        "QUESTION 02",
-        "Vehicle Comparison",
-        "Which vehicle type has the shortest average delivery time?",
+
+with right:
+
+    st.markdown(
+        '<div class="filter-panel">'
+        '<div class="eyebrow">CONTROL PANEL</div>'
+        '<div class="filter-title">Refine analysis</div>'
+        '<div class="filter-sub">'
+        'Changes are held until you press Apply.'
+        '</div>'
+        '</div>',
+        unsafe_allow_html=True
     )
 
-    q2 = (
-        filtered.groupby("Vehicle", as_index=False)["Delivery_Time"]
-        .agg(["mean", "count"])
-        .reset_index()
-        .rename(columns={"mean": "Average_Delivery_Time", "count": "Deliveries"})
-        .sort_values("Average_Delivery_Time")
-    )
+    old = st.session_state.filters
 
-    if q2.empty:
-        st.warning("No data matches the current filters.")
-    else:
-        fig = px.bar(
-            q2,
-            x="Vehicle",
-            y="Average_Delivery_Time",
-            text_auto=".1f",
-            hover_data=["Deliveries"],
-            labels={
-                "Vehicle": "Vehicle Type",
-                "Average_Delivery_Time": "Average Delivery Time (minutes)",
-                "Deliveries": "Deliveries",
-            },
-            title="Average Delivery Time by Vehicle",
-        )
-        fig = polish(fig, 540)
-        st.plotly_chart(fig, use_container_width=True)
+    # IMPORTANT:
+    # This form prevents filters from updating
+    # until the Apply button is pressed.
 
-        fastest = q2.iloc[0]
-        slowest = q2.iloc[-1]
-        show_insight(
-            f"<b>{fastest['Vehicle']}</b> has the shortest average delivery time "
-            f"at <b>{fastest['Average_Delivery_Time']:.1f} minutes</b>, while "
-            f"<b>{slowest['Vehicle']}</b> is highest at "
-            f"<b>{slowest['Average_Delivery_Time']:.1f} minutes</b>."
+    with st.form(
+        "filter_form",
+        border=False
+    ):
+
+        w = st.multiselect(
+            "🌦️ Weather",
+            weather_options,
+            default=old["weather"]
         )
 
-
-# ============================================================
-# Q3 — AGENT
-# ============================================================
-elif page == "👤 Agent Performance":
-    show_header(
-        "QUESTION 03",
-        "Agent Performance",
-        "How do agent rating and age relate to delivery time?",
-    )
-
-    agent_df = filtered.dropna(
-        subset=["Agent_Rating", "Agent_Age", "Delivery_Time", "Agent_Age_Group"]
-    ).copy()
-
-    if agent_df.empty:
-        st.warning("Not enough data for the agent analysis.")
-    else:
-        corr = safe_corr(agent_df, "Agent_Rating", "Delivery_Time")
-
-        a1, a2, a3 = st.columns(3)
-        a1.metric("Average Agent Rating", f"{agent_df['Agent_Rating'].mean():.2f}")
-        a2.metric("Average Agent Age", f"{agent_df['Agent_Age'].mean():.1f} yrs")
-        a3.metric("Rating ↔ Delivery Correlation", f"{corr:.2f}" if pd.notna(corr) else "N/A")
-
-        fig = px.scatter(
-            agent_df,
-            x="Agent_Rating",
-            y="Delivery_Time",
-            color="Agent_Age_Group",
-            opacity=.45,
-            labels={
-                "Agent_Rating": "Agent Rating",
-                "Delivery_Time": "Delivery Time (minutes)",
-                "Agent_Age_Group": "Age Group",
-            },
-            hover_data=["Agent_Age", "Vehicle", "Area", "Category"],
-            title="Agent Rating vs Delivery Time",
+        t = st.multiselect(
+            "🚦 Traffic",
+            traffic_options,
+            default=old["traffic"]
         )
-        fig = polish(fig, 570)
-        st.plotly_chart(fig, use_container_width=True)
 
-        if pd.isna(corr):
-            relation = "A correlation could not be calculated for this selection."
-        elif corr < -.2:
-            relation = f"The relationship is negative (r ≈ {corr:.2f}), so higher ratings tend to be associated with shorter delivery times."
-        elif corr > .2:
-            relation = f"The relationship is positive (r ≈ {corr:.2f}), so higher ratings tend to be associated with longer delivery times."
+        v = st.multiselect(
+            "🚗 Vehicle",
+            vehicle_options,
+            default=old["vehicle"]
+        )
+
+        c = st.multiselect(
+            "📦 Category",
+            category_options,
+            default=old["category"]
+        )
+
+        a = st.multiselect(
+            "📍 Area",
+            area_options,
+            default=old["area"]
+        )
+
+        dates = st.date_input(
+            "📅 Order dates",
+            value=(
+                old["start"],
+                old["end"]
+            ),
+            min_value=min_date,
+            max_value=max_date
+        )
+
+        apply = st.form_submit_button(
+            "✓  Apply filters",
+            use_container_width=True,
+            type="primary"
+        )
+
+    # ========================================================
+    # APPLY FILTERS
+    # ========================================================
+
+    if apply:
+
+        if (
+            isinstance(dates, tuple)
+            and len(dates) == 2
+        ):
+
+            start, end = dates
+
         else:
-            relation = f"The linear relationship is weak (r ≈ {corr:.2f}), so rating alone does not strongly explain delivery time."
 
-        show_insight(relation)
+            start = dates
+            end = dates
 
-
-# ============================================================
-# Q4 — AREA
-# ============================================================
-elif page == "🗺️ Area Analysis":
-    show_header(
-        "QUESTION 04",
-        "Area Analysis",
-        "Which areas have the highest average delivery times?",
-    )
-
-    q4 = (
-        filtered.groupby("Area", as_index=False)["Delivery_Time"]
-        .agg(["mean", "count"])
-        .reset_index()
-        .rename(columns={"mean": "Average_Delivery_Time", "count": "Deliveries"})
-        .sort_values("Average_Delivery_Time", ascending=False)
-    )
-
-    if q4.empty:
-        st.warning("No data matches the current filters.")
-    else:
-        fig = px.bar(
-            q4,
-            x="Average_Delivery_Time",
-            y="Area",
-            orientation="h",
-            text_auto=".1f",
-            hover_data=["Deliveries"],
-            labels={
-                "Average_Delivery_Time": "Average Delivery Time (minutes)",
-                "Area": "Area",
-                "Deliveries": "Deliveries",
-            },
-            title="Average Delivery Time by Area",
-        )
-        fig = polish(fig, max(520, 38 * len(q4)))
-        fig.update_layout(yaxis={"categoryorder": "total ascending"})
-        st.plotly_chart(fig, use_container_width=True)
-
-        worst = q4.iloc[0]
-        show_insight(
-            f"<b>{worst['Area']}</b> has the highest average delivery time at "
-            f"<b>{worst['Average_Delivery_Time']:.1f} minutes</b> in the current selection."
+        st.session_state.previous_filters = (
+            st.session_state.filters.copy()
         )
 
+        st.session_state.filters = {
+            "weather": w,
+            "traffic": t,
+            "vehicle": v,
+            "category": c,
+            "area": a,
+            "start": start,
+            "end": end
+        }
+
+        st.session_state.filter_applied = True
+
+        st.rerun()
+
+    # ========================================================
+    # RESET
+    # ========================================================
+
+    if st.button(
+        "Reset filters",
+        use_container_width=True,
+        key="reset"
+    ):
+
+        st.session_state.previous_filters = (
+            st.session_state.filters.copy()
+        )
+
+        st.session_state.filters = {
+            "weather": weather_options,
+            "traffic": traffic_options,
+            "vehicle": vehicle_options,
+            "category": category_options,
+            "area": area_options,
+            "start": min_date,
+            "end": max_date
+        }
+
+        st.session_state.filter_applied = True
+
+        st.rerun()
+
 
 # ============================================================
-# Q5 — CATEGORY
+# FILTER DATA
 # ============================================================
-elif page == "📦 Category Analysis":
-    show_header(
-        "QUESTION 05",
-        "Category Analysis",
-        "Which categories have the highest and most variable delivery times?",
+
+filters = st.session_state.filters
+
+filtered = df[
+    df["Weather"].isin(
+        filters["weather"]
+    )
+    & df["Traffic"].isin(
+        filters["traffic"]
+    )
+    & df["Vehicle"].isin(
+        filters["vehicle"]
+    )
+    & df["Category"].isin(
+        filters["category"]
+    )
+    & df["Area"].isin(
+        filters["area"]
+    )
+    & (
+        df["Order_Date"].dt.date
+        >= filters["start"]
+    )
+    & (
+        df["Order_Date"].dt.date
+        <= filters["end"]
+    )
+].copy()
+
+
+# ============================================================
+# CENTER PANEL
+# ============================================================
+
+with center:
+
+    # ========================================================
+    # BEFORE → AFTER FILTER IMPACT
+    # ========================================================
+
+    if st.session_state.pop(
+        "filter_applied",
+        False
+    ):
+
+        prev = st.session_state.pop(
+            "previous_filters",
+            None
+        )
+
+        if prev is not None:
+
+            old_df = df[
+                df["Weather"].isin(
+                    prev["weather"]
+                )
+                & df["Traffic"].isin(
+                    prev["traffic"]
+                )
+                & df["Vehicle"].isin(
+                    prev["vehicle"]
+                )
+                & df["Category"].isin(
+                    prev["category"]
+                )
+                & df["Area"].isin(
+                    prev["area"]
+                )
+                & (
+                    df["Order_Date"].dt.date
+                    >= prev["start"]
+                )
+                & (
+                    df["Order_Date"].dt.date
+                    <= prev["end"]
+                )
+            ]
+
+            old_avg = (
+                old_df["Delivery_Time"].mean()
+            )
+
+            new_avg = (
+                filtered["Delivery_Time"].mean()
+            )
+
+            old_late = (
+                old_df["Late_Delivery"].mean()
+                * 100
+                if len(old_df)
+                else np.nan
+            )
+
+            new_late = (
+                filtered["Late_Delivery"].mean()
+                * 100
+                if len(filtered)
+                else np.nan
+            )
+
+            if (
+                pd.notna(old_avg)
+                and pd.notna(new_avg)
+            ):
+
+                delta = (
+                    new_avg - old_avg
+                )
+
+                pct = (
+                    delta / old_avg * 100
+                    if old_avg
+                    else 0
+                )
+
+                movement = (
+                    "increased"
+                    if delta > 0
+                    else
+                    "decreased"
+                    if delta < 0
+                    else
+                    "stayed the same"
+                )
+
+                st.markdown(
+                    f'<div class="impact">'
+                    f'<div class="impact-title">'
+                    f'✓ Filter change applied'
+                    f'</div>'
+                    f'<div class="impact-main">'
+                    f'Average delivery time '
+                    f'<b>{movement}</b> by '
+                    f'<b>{abs(delta):.1f} min '
+                    f'({abs(pct):.1f}%)</b>.'
+                    f'</div>'
+                    f'<div class="impact-small">'
+                    f'Previous: <b>{old_avg:.1f} min</b>'
+                    f' → '
+                    f'Current: <b>{new_avg:.1f} min</b>'
+                    f' &nbsp;•&nbsp; '
+                    f'Late rate: '
+                    f'<b>{old_late:.1f}%</b>'
+                    f' → '
+                    f'<b>{new_late:.1f}%</b>'
+                    f'</div>'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+
+    # ========================================================
+    # SELECTED RECORDS
+    # ========================================================
+
+    st.markdown(
+        f'<div class="pill">'
+        f'● {len(filtered):,} deliveries selected'
+        f'</div>',
+        unsafe_allow_html=True
     )
 
-    q5 = filtered.dropna(subset=["Category", "Delivery_Time"]).copy()
+    page = st.session_state.page
 
-    if q5.empty:
-        st.warning("No data matches the current filters.")
-    else:
-        stats = (
-            q5.groupby("Category")["Delivery_Time"]
-            .agg(["mean", "std", "median", "count"])
+    # ========================================================
+    # HELPER FUNCTIONS
+    # ========================================================
+
+    def header(
+        kicker,
+        title,
+        subtitle
+    ):
+
+        st.markdown(
+            f'<div class="eyebrow">'
+            f'{kicker}'
+            f'</div>'
+            f'<div class="page-title">'
+            f'{title}'
+            f'</div>'
+            f'<div class="page-subtitle">'
+            f'{subtitle}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+
+    def question(text):
+
+        st.markdown(
+            f'<div class="question">'
+            f'<div class="question-label">'
+            f'Manager question'
+            f'</div>'
+            f'<div class="question-text">'
+            f'{text}'
+            f'</div>'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+
+    def insight(text):
+
+        st.markdown(
+            f'<div class="insight">'
+            f'<b>Key insight:</b> '
+            f'{text}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
+
+
+    def polish(
+        fig,
+        height=520
+    ):
+
+        fig.update_layout(
+
+            template="plotly",
+
+            height=height,
+
+            paper_bgcolor="#1b1718",
+
+            plot_bgcolor="#1b1718",
+
+            font=dict(
+                color="#eee7df",
+                family="Inter, Arial, sans-serif"
+            ),
+
+            # More space above graph title
+            margin=dict(
+                l=42,
+                r=32,
+                t=115,
+                b=42
+            ),
+
+            title=dict(
+                x=0.02,
+                xanchor="left",
+                y=0.98,
+                yanchor="top",
+                font=dict(
+                    size=20,
+                    color="#f1e9df"
+                )
+            ),
+
+            colorway=[
+                "#8f3453",
+                "#c8aa73",
+                "#4f806d",
+                "#b9657f",
+                "#8d9d92",
+                "#a98452"
+            ],
+
+            hoverlabel=dict(
+                bgcolor="#241d1f",
+                font_color="#f3eee6",
+                bordercolor="#594047"
+            ),
+
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.03,
+                x=0,
+                font=dict(
+                    color="#c8bfba"
+                )
+            ),
+
+            bargap=.25
+        )
+
+        fig.update_xaxes(
+            showgrid=False,
+            linecolor="#4a3b3e",
+            tickfont=dict(
+                color="#a99f99"
+            ),
+            title_font=dict(
+                color="#d7cec7"
+            )
+        )
+
+        fig.update_yaxes(
+            gridcolor="#30282a",
+            zeroline=False,
+            tickfont=dict(
+                color="#a99f99"
+            ),
+            title_font=dict(
+                color="#d7cec7"
+            )
+        )
+
+        return fig
+
+
+    # ========================================================
+    # OVERVIEW
+    # ========================================================
+
+    if page == "🏠 Overview":
+
+        st.markdown(
+            '<div class="hero">'
+            '<div class="eyebrow">'
+            'LOGISTICS PERFORMANCE DASHBOARD'
+            '</div>'
+            '<h1>'
+            'LogiSight Delivery Intelligence'
+            '</h1>'
+            '<p>'
+            'Turn last-mile delivery data into clear '
+            'operational decisions — one manager question '
+            'at a time.'
+            '</p>'
+            '</div>',
+            unsafe_allow_html=True
+        )
+
+        st.caption(
+            f"Source: {filename}"
+            f"  •  {len(df):,} cleaned records"
+            f"  •  {len(filtered):,} in current view"
+        )
+
+        avg = (
+            filtered["Delivery_Time"].mean()
+        )
+
+        late = (
+            filtered["Late_Delivery"].mean()
+            * 100
+            if len(filtered)
+            else 0
+        )
+
+        pickup = (
+            filtered["Pickup_Duration"].mean()
+        )
+
+        distance = (
+            filtered["Delivery_Distance"].mean()
+        )
+
+        k1, k2, k3, k4 = st.columns(4)
+
+        k1.metric(
+            "Average delivery",
+            (
+                f"{avg:.1f} min"
+                if pd.notna(avg)
+                else "N/A"
+            )
+        )
+
+        k2.metric(
+            "Deliveries",
+            f"{len(filtered):,}"
+        )
+
+        k3.metric(
+            "Late delivery rate",
+            f"{late:.1f}%"
+        )
+
+        k4.metric(
+            "Late threshold",
+            f"{late_threshold:.1f} min"
+        )
+
+        st.markdown(
+            "### What can the manager investigate?"
+        )
+
+        cards = [
+
+            (
+                "🌧️",
+                "Delay Analyzer",
+                "Weather + traffic"
+            ),
+
+            (
+                "🚗",
+                "Vehicle Comparison",
+                "Vehicle performance"
+            ),
+
+            (
+                "👤",
+                "Agent Performance",
+                "Rating + age"
+            ),
+
+            (
+                "🗺️",
+                "Area Analysis",
+                "Area performance"
+            ),
+
+            (
+                "📦",
+                "Category Analysis",
+                "Distribution"
+            ),
+
+            (
+                "🕐",
+                "Time-of-Day",
+                "Order timing"
+            ),
+
+            (
+                "📍",
+                "Distance Analyzer",
+                "Distance effect"
+            ),
+
+            (
+                "⏱️",
+                "Pickup Efficiency",
+                "Pickup effect"
+            ),
+        ]
+
+        cols = st.columns(4)
+
+        for i, (
+            icon,
+            title,
+            desc
+        ) in enumerate(cards):
+
+            with cols[i % 4]:
+
+                st.markdown(
+                    f'<div class="guide" '
+                    f'style="min-height:80px;'
+                    f'margin-bottom:.7rem">'
+                    f'<div style="font-size:1.3rem">'
+                    f'{icon}'
+                    f'</div>'
+                    f'<b style="color:#d7c9b7">'
+                    f'{title}'
+                    f'</b>'
+                    f'<br>{desc}'
+                    f'</div>',
+                    unsafe_allow_html=True
+                )
+
+        st.info(
+            "Use the navigation on the left. "
+            "Filters on the right stay active "
+            "across every analysis."
+        )
+
+
+    # ========================================================
+    # Q1 — DELAY ANALYZER
+    # ========================================================
+
+    elif page == "🌧️ Delay Analyzer":
+
+        header(
+            "QUESTION 01",
+            "Delay Analyzer",
+            "Weather × traffic and average delivery time"
+        )
+
+        question(
+            "How do weather and traffic conditions "
+            "affect average delivery time?"
+        )
+
+        q = (
+            filtered
+            .groupby(
+                ["Weather", "Traffic"],
+                as_index=False
+            )["Delivery_Time"]
+            .mean()
+        )
+
+        if q.empty:
+
+            st.warning(
+                "No data matches the current filters."
+            )
+
+        else:
+
+            fig = px.bar(
+                q,
+                x="Weather",
+                y="Delivery_Time",
+                color="Traffic",
+                barmode="group",
+                text_auto=".1f",
+                labels={
+                    "Delivery_Time":
+                        "Average delivery time (min)"
+                },
+                title=(
+                    "Average Delivery Time "
+                    "by Weather and Traffic"
+                )
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            worst = q.loc[
+                q["Delivery_Time"].idxmax()
+            ]
+
+            insight(
+                f"The slowest selected combination "
+                f"is <b>{worst['Weather']}</b> weather "
+                f"with <b>{worst['Traffic']}</b> traffic "
+                f"at <b>{worst['Delivery_Time']:.1f} "
+                f"minutes</b>."
+            )
+
+
+    # ========================================================
+    # Q2 — VEHICLE COMPARISON
+    # ========================================================
+
+    elif page == "🚗 Vehicle Comparison":
+
+        header(
+            "QUESTION 02",
+            "Vehicle Comparison",
+            "Compare delivery performance across vehicle types"
+        )
+
+        question(
+            "Which vehicle type has the shortest "
+            "average delivery time?"
+        )
+
+        q = (
+            filtered
+            .groupby(
+                "Vehicle",
+                as_index=False
+            )["Delivery_Time"]
+            .agg(
+                ["mean", "count"]
+            )
             .reset_index()
-            .rename(
-                columns={
-                    "mean": "Average",
-                    "std": "Std_Dev",
-                    "median": "Median",
-                    "count": "Deliveries",
+        )
+
+        q = q.rename(
+            columns={
+                "mean": "Average",
+                "count": "Deliveries"
+            }
+        ).sort_values(
+            "Average"
+        )
+
+        if q.empty:
+
+            st.warning(
+                "No data matches the current filters."
+            )
+
+        else:
+
+            fig = px.bar(
+                q,
+                x="Vehicle",
+                y="Average",
+                text_auto=".1f",
+                hover_data=["Deliveries"],
+                labels={
+                    "Average":
+                        "Average delivery time (min)",
+                    "Vehicle":
+                        "Vehicle type"
+                },
+                title="Average Delivery Time by Vehicle"
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"<b>{q.iloc[0]['Vehicle']}</b> "
+                f"has the shortest selected average "
+                f"at <b>{q.iloc[0]['Average']:.1f} "
+                f"minutes</b>."
+            )
+
+
+    # ========================================================
+    # Q3 — AGENT PERFORMANCE
+    # ========================================================
+
+    elif page == "👤 Agent Performance":
+
+        header(
+            "QUESTION 03",
+            "Agent Performance",
+            "Explore rating, age and delivery-time relationships"
+        )
+
+        question(
+            "How do agent rating and age relate "
+            "to delivery time?"
+        )
+
+        q = filtered.dropna(
+            subset=[
+                "Agent_Rating",
+                "Agent_Age",
+                "Delivery_Time",
+                "Agent_Age_Group"
+            ]
+        )
+
+        if len(q) < 2:
+
+            st.warning(
+                "Not enough data for this analysis."
+            )
+
+        else:
+
+            corr = q[
+                "Agent_Rating"
+            ].corr(
+                q["Delivery_Time"]
+            )
+
+            a, b, c = st.columns(3)
+
+            a.metric(
+                "Average rating",
+                f"{q['Agent_Rating'].mean():.2f}"
+            )
+
+            b.metric(
+                "Average agent age",
+                f"{q['Agent_Age'].mean():.1f} yrs"
+            )
+
+            c.metric(
+                "Rating ↔ delivery r",
+                f"{corr:.2f}"
+            )
+
+            sample = q.sample(
+                min(7000, len(q)),
+                random_state=42
+            )
+
+            fig = px.scatter(
+                sample,
+                x="Agent_Rating",
+                y="Delivery_Time",
+                color="Agent_Age_Group",
+                opacity=.45,
+                hover_data=[
+                    "Agent_Age",
+                    "Vehicle",
+                    "Area",
+                    "Category"
+                ],
+                labels={
+                    "Agent_Rating":
+                        "Agent rating",
+                    "Delivery_Time":
+                        "Delivery time (min)",
+                    "Agent_Age_Group":
+                        "Age group"
+                },
+                title="Agent Rating vs Delivery Time"
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig, 560),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"The rating/delivery-time correlation "
+                f"is <b>{corr:.2f}</b>. "
+                "A value close to zero indicates "
+                "a weak linear relationship."
+            )
+
+
+    # ========================================================
+    # Q4 — AREA ANALYSIS
+    # ========================================================
+
+    elif page == "🗺️ Area Analysis":
+
+        header(
+            "QUESTION 04",
+            "Area Analysis",
+            "Locate areas with slower average delivery performance"
+        )
+
+        question(
+            "Which areas have the highest "
+            "average delivery times?"
+        )
+
+        q = (
+            filtered
+            .groupby(
+                "Area",
+                as_index=False
+            )["Delivery_Time"]
+            .agg(
+                ["mean", "count"]
+            )
+            .reset_index()
+        )
+
+        q = q.rename(
+            columns={
+                "mean": "Average",
+                "count": "Deliveries"
+            }
+        ).sort_values(
+            "Average",
+            ascending=False
+        )
+
+        if q.empty:
+
+            st.warning(
+                "No data matches the current filters."
+            )
+
+        else:
+
+            fig = px.bar(
+                q,
+                x="Average",
+                y="Area",
+                orientation="h",
+                text_auto=".1f",
+                hover_data=["Deliveries"],
+                labels={
+                    "Average":
+                        "Average delivery time (min)"
+                },
+                title="Average Delivery Time by Area"
+            )
+
+            fig.update_layout(
+                yaxis={
+                    "categoryorder":
+                        "total ascending"
                 }
             )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(
+                    fig,
+                    max(
+                        500,
+                        35 * len(q)
+                    )
+                ),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"<b>{q.iloc[0]['Area']}</b> "
+                f"has the highest selected average "
+                f"delivery time at "
+                f"<b>{q.iloc[0]['Average']:.1f} "
+                f"minutes</b>."
+            )
+
+
+    # ========================================================
+    # Q5 — CATEGORY ANALYSIS
+    # ========================================================
+
+    elif page == "📦 Category Analysis":
+
+        header(
+            "QUESTION 05",
+            "Category Analysis",
+            "Compare delivery-time distributions and variability"
         )
 
-        highest_mean = stats.loc[stats["Average"].idxmax()]
-        most_variable = stats.loc[stats["Std_Dev"].idxmax()]
-
-        c1, c2, c3 = st.columns(3)
-        c1.metric("Highest Average", f"{highest_mean['Average']:.1f} min")
-        c2.metric("Highest-Avg Category", str(highest_mean["Category"]))
-        c3.metric("Most Variable", str(most_variable["Category"]))
-
-        fig = px.box(
-            q5,
-            x="Category",
-            y="Delivery_Time",
-            points=False,
-            labels={
-                "Category": "Product Category",
-                "Delivery_Time": "Delivery Time (minutes)",
-            },
-            title="Delivery-Time Distribution by Category",
-        )
-        fig = polish(fig, 560)
-        st.plotly_chart(fig, use_container_width=True)
-
-        show_insight(
-            f"<b>{highest_mean['Category']}</b> has the highest average delivery time "
-            f"({highest_mean['Average']:.1f} min), while <b>{most_variable['Category']}</b> "
-            f"has the greatest variability (SD ≈ {most_variable['Std_Dev']:.1f} min)."
+        question(
+            "Which categories have the highest "
+            "and most variable delivery times?"
         )
 
-        with st.expander("View category statistics"):
-            st.dataframe(
-                stats.sort_values("Average", ascending=False),
-                use_container_width=True,
-                hide_index=True,
+        q = filtered.dropna(
+            subset=[
+                "Category",
+                "Delivery_Time"
+            ]
+        )
+
+        if q.empty:
+
+            st.warning(
+                "No data matches the current filters."
+            )
+
+        else:
+
+            stats = (
+                q.groupby("Category")[
+                    "Delivery_Time"
+                ]
+                .agg(
+                    [
+                        "mean",
+                        "std",
+                        "median",
+                        "count"
+                    ]
+                )
+                .reset_index()
+            )
+
+            hi = stats.loc[
+                stats["mean"].idxmax()
+            ]
+
+            var = stats.loc[
+                stats["std"].idxmax()
+            ]
+
+            a, b, c = st.columns(3)
+
+            a.metric(
+                "Highest average",
+                f"{hi['mean']:.1f} min"
+            )
+
+            b.metric(
+                "Highest-avg category",
+                str(hi["Category"])
+            )
+
+            c.metric(
+                "Most variable",
+                str(var["Category"])
+            )
+
+            fig = px.box(
+                q,
+                x="Category",
+                y="Delivery_Time",
+                points=False,
+                labels={
+                    "Delivery_Time":
+                        "Delivery time (min)"
+                },
+                title=(
+                    "Delivery-Time Distribution "
+                    "by Category"
+                )
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig, 560),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"<b>{hi['Category']}</b> has the "
+                f"highest selected average "
+                f"({hi['mean']:.1f} min), while "
+                f"<b>{var['Category']}</b> has the "
+                f"highest variability "
+                f"(SD {var['std']:.1f} min)."
+            )
+
+            with st.expander(
+                "View category statistics"
+            ):
+
+                st.dataframe(
+                    stats.sort_values(
+                        "mean",
+                        ascending=False
+                    ),
+                    use_container_width=True,
+                    hide_index=True
+                )
+
+
+    # ========================================================
+    # Q6 — TIME OF DAY
+    # ========================================================
+
+    elif page == "🕐 Time-of-Day":
+
+        header(
+            "QUESTION 06",
+            "Time-of-Day Analyzer",
+            "Compare performance across order times"
+        )
+
+        question(
+            "Does the time of day when an order "
+            "is placed influence delivery performance?"
+        )
+
+        order = [
+            "Night",
+            "Morning",
+            "Afternoon",
+            "Evening"
+        ]
+
+        q = (
+            filtered
+            .groupby(
+                "Time_of_Day",
+                as_index=False
+            )["Delivery_Time"]
+            .agg(
+                ["mean", "count"]
+            )
+            .reset_index()
+        )
+
+        q = q.rename(
+            columns={
+                "mean": "Average",
+                "count": "Deliveries"
+            }
+        )
+
+        q["Time_of_Day"] = pd.Categorical(
+            q["Time_of_Day"],
+            categories=order,
+            ordered=True
+        )
+
+        q = q.sort_values(
+            "Time_of_Day"
+        )
+
+        if q.empty:
+
+            st.warning(
+                "No data matches the current filters."
+            )
+
+        else:
+
+            fig = px.bar(
+                q,
+                x="Time_of_Day",
+                y="Average",
+                text_auto=".1f",
+                hover_data=["Deliveries"],
+                labels={
+                    "Average":
+                        "Average delivery time (min)",
+                    "Time_of_Day":
+                        "Time of day"
+                },
+                title=(
+                    "Average Delivery Time "
+                    "by Time of Day"
+                )
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            worst = q.loc[
+                q["Average"].idxmax()
+            ]
+
+            insight(
+                f"<b>{worst['Time_of_Day']}</b> "
+                f"has the highest selected average "
+                f"at <b>{worst['Average']:.1f} "
+                f"minutes</b>."
+            )
+
+
+    # ========================================================
+    # DISTANCE ANALYZER
+    # ========================================================
+
+    elif page == "📍 Distance Analyzer":
+
+        header(
+            "DERIVED FEATURE",
+            "Distance Analyzer",
+            "Test whether delivery distance corresponds to delivery time"
+        )
+
+        question(
+            "Does delivery distance correspond "
+            "to delivery time?"
+        )
+
+        q = filtered.dropna(
+            subset=[
+                "Delivery_Distance",
+                "Delivery_Time"
+            ]
+        )
+
+        if len(q) < 2:
+
+            st.warning(
+                "Not enough coordinate data "
+                "for this analysis."
+            )
+
+        else:
+
+            corr = q[
+                "Delivery_Distance"
+            ].corr(
+                q["Delivery_Time"]
+            )
+
+            a, b = st.columns(2)
+
+            a.metric(
+                "Average distance",
+                f"{q['Delivery_Distance'].mean():.2f} km"
+            )
+
+            b.metric(
+                "Distance ↔ delivery r",
+                f"{corr:.2f}"
+            )
+
+            sample = q.sample(
+                min(7000, len(q)),
+                random_state=42
+            )
+
+            fig = px.scatter(
+                sample,
+                x="Delivery_Distance",
+                y="Delivery_Time",
+                opacity=.35,
+                trendline="ols",
+                labels={
+                    "Delivery_Distance":
+                        "Distance (km)",
+                    "Delivery_Time":
+                        "Delivery time (min)"
+                },
+                title="Distance vs Delivery Time"
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig, 560),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"The calculated Haversine distance "
+                f"has a correlation of <b>{corr:.2f}</b> "
+                "with delivery time in the current selection."
+            )
+
+
+    # ========================================================
+    # PICKUP EFFICIENCY
+    # ========================================================
+
+    elif page == "⏱️ Pickup Efficiency":
+
+        header(
+            "QUESTION 07",
+            "Pickup Efficiency Analyzer",
+            "Explore pickup duration and overall delivery time"
+        )
+
+        question(
+            "Does pickup duration influence "
+            "the overall delivery time?"
+        )
+
+        q = filtered.dropna(
+            subset=[
+                "Pickup_Duration",
+                "Delivery_Time"
+            ]
+        )
+
+        if len(q) < 2:
+
+            st.warning(
+                "Not enough pickup-time data "
+                "for this analysis."
+            )
+
+        else:
+
+            corr = q[
+                "Pickup_Duration"
+            ].corr(
+                q["Delivery_Time"]
+            )
+
+            a, b = st.columns(2)
+
+            a.metric(
+                "Average pickup duration",
+                f"{q['Pickup_Duration'].mean():.2f} min"
+            )
+
+            b.metric(
+                "Pickup ↔ delivery r",
+                f"{corr:.2f}"
+            )
+
+            sample = q.sample(
+                min(7000, len(q)),
+                random_state=42
+            )
+
+            fig = px.scatter(
+                sample,
+                x="Pickup_Duration",
+                y="Delivery_Time",
+                opacity=.35,
+                trendline="ols",
+                labels={
+                    "Pickup_Duration":
+                        "Pickup duration (min)",
+                    "Delivery_Time":
+                        "Delivery time (min)"
+                },
+                title=(
+                    "Pickup Duration "
+                    "vs Delivery Time"
+                )
+            )
+
+            st.markdown(
+                '<div class="plotly-chart-container">',
+                unsafe_allow_html=True
+            )
+
+            st.plotly_chart(
+                polish(fig, 560),
+                use_container_width=True
+            )
+
+            st.markdown(
+                '</div>',
+                unsafe_allow_html=True
+            )
+
+            insight(
+                f"Pickup duration has a correlation "
+                f"of <b>{corr:.2f}</b> with delivery time "
+                "in the current selection."
             )
 
 
 # ============================================================
-# Q6 — TIME OF DAY
+# FOOTER
 # ============================================================
-elif page == "🕐 Time-of-Day":
-    show_header(
-        "QUESTION 06",
-        "Time-of-Day Analyzer",
-        "Does the time of day when an order is placed influence delivery performance?",
-    )
 
-    tod_order = ["Night", "Morning", "Afternoon", "Evening"]
-
-    tod_stats = (
-        filtered.groupby("Time_of_Day", as_index=False)["Delivery_Time"]
-        .agg(["mean", "count"])
-        .reset_index()
-        .rename(columns={"mean": "Average_Delivery_Time", "count": "Deliveries"})
-    )
-    tod_stats["Time_of_Day"] = pd.Categorical(
-        tod_stats["Time_of_Day"], categories=tod_order, ordered=True
-    )
-    tod_stats = tod_stats.sort_values("Time_of_Day")
-
-    if tod_stats.empty:
-        st.warning("No data matches the current filters.")
-    else:
-        fig = px.bar(
-            tod_stats,
-            x="Time_of_Day",
-            y="Average_Delivery_Time",
-            text_auto=".1f",
-            hover_data=["Deliveries"],
-            labels={
-                "Time_of_Day": "Time of Day",
-                "Average_Delivery_Time": "Average Delivery Time (minutes)",
-                "Deliveries": "Deliveries",
-            },
-            title="Average Delivery Time by Time of Day",
-        )
-        fig = polish(fig, 520)
-        st.plotly_chart(fig, use_container_width=True)
-
-        worst = tod_stats.loc[tod_stats["Average_Delivery_Time"].idxmax()]
-        show_insight(
-            f"<b>{worst['Time_of_Day']}</b> has the highest average delivery time "
-            f"at <b>{worst['Average_Delivery_Time']:.1f} minutes</b>."
-        )
-
-
-# ============================================================
-# DISTANCE
-# ============================================================
-elif page == "📍 Distance Analyzer":
-    show_header(
-        "DERIVED FEATURE",
-        "Distance Analyzer",
-        "Does delivery distance correspond to delivery time?",
-    )
-
-    distance_df = filtered.dropna(
-        subset=["Delivery_Distance", "Delivery_Time"]
-    ).copy()
-
-    if len(distance_df) < 2:
-        st.warning("Not enough coordinate data for this analysis.")
-    else:
-        corr = safe_corr(distance_df, "Delivery_Distance", "Delivery_Time")
-
-        c1, c2 = st.columns(2)
-        c1.metric("Average Distance", f"{distance_df['Delivery_Distance'].mean():.2f} km")
-        c2.metric("Distance ↔ Delivery Correlation", f"{corr:.2f}" if pd.notna(corr) else "N/A")
-
-        # Sample large datasets so the browser stays responsive.
-        plot_df = distance_df.sample(min(7000, len(distance_df)), random_state=42)
-
-        fig = px.scatter(
-            plot_df,
-            x="Delivery_Distance",
-            y="Delivery_Time",
-            opacity=.35,
-            trendline="ols",
-            labels={
-                "Delivery_Distance": "Delivery Distance (km)",
-                "Delivery_Time": "Delivery Time (minutes)",
-            },
-            hover_data=["Vehicle", "Traffic", "Area", "Category"],
-            title="Delivery Distance vs Delivery Time",
-        )
-        fig = polish(fig, 570)
-        st.plotly_chart(fig, use_container_width=True)
-
-        show_insight(
-            f"Delivery Distance is calculated from store/drop coordinates using the "
-            f"Haversine formula. The correlation with delivery time is "
-            f"<b>{corr:.2f}</b>."
-        )
-
-
-# ============================================================
-# PICKUP
-# ============================================================
-elif page == "⏱️ Pickup Efficiency":
-    show_header(
-        "QUESTION 07",
-        "Pickup Efficiency Analyzer",
-        "Does pickup duration influence the overall delivery time?",
-    )
-
-    pickup_df = filtered.dropna(
-        subset=["Pickup_Duration", "Delivery_Time"]
-    ).copy()
-
-    if len(pickup_df) < 2:
-        st.warning("Not enough pickup-time data for this analysis.")
-    else:
-        corr = safe_corr(pickup_df, "Pickup_Duration", "Delivery_Time")
-
-        c1, c2 = st.columns(2)
-        c1.metric("Average Pickup Duration", f"{pickup_df['Pickup_Duration'].mean():.2f} min")
-        c2.metric("Pickup ↔ Delivery Correlation", f"{corr:.2f}" if pd.notna(corr) else "N/A")
-
-        plot_df = pickup_df.sample(min(7000, len(pickup_df)), random_state=42)
-
-        fig = px.scatter(
-            plot_df,
-            x="Pickup_Duration",
-            y="Delivery_Time",
-            opacity=.35,
-            trendline="ols",
-            labels={
-                "Pickup_Duration": "Pickup Duration (minutes)",
-                "Delivery_Time": "Delivery Time (minutes)",
-            },
-            hover_data=["Vehicle", "Traffic", "Area", "Category"],
-            title="Pickup Duration vs Delivery Time",
-        )
-        fig = polish(fig, 570)
-        st.plotly_chart(fig, use_container_width=True)
-
-        show_insight(
-            f"Pickup Duration is calculated as Pickup Time − Order Time. "
-            f"The correlation with delivery time is <b>{corr:.2f}</b>."
-        )
-
-
-# ------------------------------------------------------------
-# Footer
-# ------------------------------------------------------------
-st.markdown("---")
 st.markdown(
-    '<div class="footer">LOGISIGHT • Same Data. Smarter Decisions. • FA-2 Dashboarding & Deployment</div>',
-    unsafe_allow_html=True,
+    '<div class="footer">'
+    'LOGISIGHT • Same data. Smarter decisions. • FA-2'
+    '</div>',
+    unsafe_allow_html=True
 )
