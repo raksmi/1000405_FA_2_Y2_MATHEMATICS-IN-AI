@@ -19,106 +19,122 @@ st.set_page_config(
 # ------------------------- PREMIUM UI ------------------------
 st.markdown("""
 <style>
-:root{
-    --forest:#244f42;
-    --green:#4c8b70;
-    --sage:#e7f1eb;
-    --pale:#f5f8f5;
-    --cream:#fbfcfa;
-    --ink:#173f34;
-    --muted:#70847c;
-    --line:#dbe7e0;
-    --gold:#b59a63;
+ :root{
+    --bg:#120f10;
+    --panel:#1d1819;
+    --panel2:#241d1f;
+    --burgundy:#7b2946;
+    --burgundy2:#9f3d5d;
+    --forest:#315b4d;
+    --sage:#6f9a86;
+    --champagne:#c8aa73;
+    --cream:#f3eee6;
+    --muted:#a99f99;
+    --line:#3a3032;
+    --gold:#c8aa73;
 }
 
 .stApp{
     background:
-      radial-gradient(circle at 85% 0%,rgba(76,139,112,.12),transparent 25%),
-      linear-gradient(180deg,#fbfcfa 0%,#f3f7f4 100%);
+      radial-gradient(circle at 78% 4%,rgba(159,61,93,.20),transparent 25%),
+      radial-gradient(circle at 15% 30%,rgba(49,91,77,.14),transparent 28%),
+      linear-gradient(135deg,#0f0d0e 0%,#171213 52%,#120f10 100%);
+    color:var(--cream);
 }
-.block-container{max-width:1550px;padding:1.15rem 1.35rem 3rem;}
+.block-container{max-width:1580px;padding:1.25rem 1.25rem 3rem;}
 [data-testid="column"]{min-width:0;}
 
-.rail{
-    background:rgba(255,255,255,.78);
-    border:1px solid var(--line);
-    border-radius:22px;
-    padding:1rem;
-    box-shadow:0 12px 32px rgba(36,79,66,.06);
-    position:sticky;
-    top:1rem;
+/* Luxury three-panel shell */
+.rail,.filter-panel{
+    background:linear-gradient(160deg,rgba(36,29,31,.96),rgba(27,22,23,.96));
+    border:1px solid var(--line);border-radius:22px;
+    box-shadow:0 20px 55px rgba(0,0,0,.28);
 }
+.rail{padding:1rem;position:sticky;top:1rem;}
 .brand{
-    background:linear-gradient(145deg,#234d40,#4c8b70);
-    color:white;border-radius:18px;padding:1rem;
-    box-shadow:0 10px 25px rgba(36,79,66,.15);
-    margin-bottom:1rem;
+    background:linear-gradient(145deg,#5d1e35 0%,#7b2946 55%,#315b4d 140%);
+    color:#fff;border:1px solid rgba(200,170,115,.22);border-radius:18px;padding:1rem;
+    box-shadow:0 14px 30px rgba(0,0,0,.25);margin-bottom:1rem;
 }
-.brand-name{font-size:1.35rem;font-weight:900;letter-spacing:.08em;}
-.brand-sub{font-size:.62rem;letter-spacing:.14em;opacity:.8;margin-top:.2rem;}
-.rail-heading{color:var(--ink);font-size:.72rem;font-weight:850;text-transform:uppercase;letter-spacing:.13em;margin:.9rem 0 .45rem;}
+.brand-name{font-size:1.35rem;font-weight:900;letter-spacing:.10em;}
+.brand-sub{font-size:.62rem;letter-spacing:.14em;opacity:.78;margin-top:.2rem;}
+.rail-heading{color:#d7c9b7;font-size:.68rem;font-weight:850;text-transform:uppercase;letter-spacing:.16em;margin:.95rem 0 .5rem;}
 .guide{
-    color:var(--muted);font-size:.76rem;line-height:1.48;
-    background:#f7faf8;border:1px solid var(--line);
+    color:#b7ada7;font-size:.76rem;line-height:1.52;
+    background:rgba(255,255,255,.025);border:1px solid #342b2d;
     border-radius:14px;padding:.8rem;
 }
-.filter-panel{
-    background:rgba(255,255,255,.88);
-    border:1px solid var(--line);border-radius:22px;
-    padding:1rem;box-shadow:0 12px 32px rgba(36,79,66,.06);
-}
-.filter-title{color:var(--ink);font-size:1.05rem;font-weight:850;}
+.filter-panel{padding:1rem;margin-bottom:.75rem;}
+.filter-title{color:var(--cream);font-size:1.02rem;font-weight:850;}
 .filter-sub{color:var(--muted);font-size:.72rem;margin:.15rem 0 .8rem;}
+
+/* Main content */
 .hero{
-    padding:1.8rem 2rem;border:1px solid var(--line);border-radius:26px;
+    padding:1.85rem 2rem;border:1px solid #433538;border-radius:26px;
     background:
-      radial-gradient(circle at 88% 20%,rgba(76,139,112,.19),transparent 24%),
-      linear-gradient(135deg,#e5f0e9,#fff 72%);
-    box-shadow:0 14px 40px rgba(36,79,66,.08);margin-bottom:1rem;
+      radial-gradient(circle at 88% 20%,rgba(159,61,93,.24),transparent 26%),
+      linear-gradient(135deg,#2a2022 0%,#211a1c 72%);
+    box-shadow:0 18px 50px rgba(0,0,0,.26);margin-bottom:1.15rem;
 }
-.hero h1{margin:0;color:var(--ink);font-size:2.45rem;font-weight:900;letter-spacing:-.045em;}
-.hero p{margin:.4rem 0 0;color:var(--muted);font-size:1rem;max-width:760px;}
-.eyebrow{color:var(--green);font-size:.67rem;font-weight:900;letter-spacing:.16em;text-transform:uppercase;}
-.page-title{color:var(--ink);font-size:2rem;font-weight:900;letter-spacing:-.035em;margin:.15rem 0 .2rem;}
-.page-subtitle{color:var(--muted);font-size:.98rem;margin-bottom:1rem;}
+.hero h1{margin:0;color:#f5efe7;font-size:2.45rem;font-weight:900;letter-spacing:-.045em;}
+.hero p{margin:.45rem 0 0;color:#aaa09a;font-size:1rem;max-width:760px;}
+.eyebrow{color:var(--champagne);font-size:.64rem;font-weight:900;letter-spacing:.18em;text-transform:uppercase;}
+.page-title{color:#f4eee6;font-size:2rem;font-weight:900;letter-spacing:-.035em;margin:.18rem 0 .3rem;}
+.page-subtitle{color:#aaa09a;font-size:.96rem;margin-bottom:1.15rem;}
 .question{
-    background:#fff;border:1px solid var(--line);border-radius:16px;
-    padding:.85rem 1rem;margin:.65rem 0 1rem;
-    box-shadow:0 6px 18px rgba(36,79,66,.045);
+    background:linear-gradient(135deg,#21191b,#1c1718);border:1px solid #3b3032;border-radius:16px;
+    padding:.9rem 1rem;margin:.7rem 0 1.35rem;box-shadow:0 8px 24px rgba(0,0,0,.18);
 }
-.question-label{color:var(--gold);font-size:.64rem;font-weight:900;letter-spacing:.14em;text-transform:uppercase;}
-.question-text{color:var(--ink);font-size:1rem;font-weight:750;margin-top:.2rem;}
+.question-label{color:var(--champagne);font-size:.61rem;font-weight:900;letter-spacing:.15em;text-transform:uppercase;}
+.question-text{color:#eee7df;font-size:1rem;font-weight:750;margin-top:.22rem;}
 .insight{
-    background:linear-gradient(135deg,#edf6f1,#fff);
-    border:1px solid #cfe2d8;border-left:4px solid var(--green);
-    border-radius:14px;padding:.9rem 1rem;margin:.75rem 0;
-    color:#315c4e;box-shadow:0 6px 18px rgba(36,79,66,.04);
+    background:linear-gradient(135deg,#241b1e,#1b1718);
+    border:1px solid #493238;border-left:4px solid var(--burgundy2);
+    border-radius:14px;padding:.9rem 1rem;margin:.95rem 0;
+    color:#d8cec7;box-shadow:0 8px 22px rgba(0,0,0,.18);
 }
 .impact{
-    background:linear-gradient(135deg,#e3f0e8,#fff);
-    border:1px solid #cfe2d8;border-left:5px solid var(--green);
-    border-radius:15px;padding:.9rem 1rem;margin-bottom:1rem;
+    background:linear-gradient(135deg,#302127,#211a1c);
+    border:1px solid #54353e;border-left:5px solid var(--champagne);
+    border-radius:15px;padding:.95rem 1rem;margin-bottom:1.1rem;
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
 }
-.impact-title{color:var(--green);font-size:.68rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;}
-.impact-main{color:var(--ink);font-weight:750;margin-top:.25rem;}
-.impact-small{color:var(--muted);font-size:.75rem;margin-top:.2rem;}
+.impact-title{color:var(--champagne);font-size:.66rem;font-weight:900;letter-spacing:.13em;text-transform:uppercase;}
+.impact-main{color:#f0e8df;font-weight:750;margin-top:.28rem;}
+.impact-small{color:#a99f99;font-size:.75rem;margin-top:.2rem;}
 .pill{
-    display:inline-block;background:#edf5f0;color:var(--green);
-    border:1px solid #d4e5dc;border-radius:999px;padding:.25rem .6rem;
-    font-size:.7rem;font-weight:800;margin-bottom:.5rem;
+    display:inline-block;background:rgba(123,41,70,.18);color:#d7b9c3;
+    border:1px solid #573342;border-radius:999px;padding:.28rem .65rem;
+    font-size:.68rem;font-weight:800;margin-bottom:.65rem;
 }
 div[data-testid="stMetric"]{
-    background:#fff;border:1px solid var(--line);border-radius:16px;
-    box-shadow:0 7px 20px rgba(36,79,66,.045);padding:.85rem;
+    background:linear-gradient(145deg,#211a1c,#1b1718);border:1px solid #393033;border-radius:16px;
+    box-shadow:0 10px 26px rgba(0,0,0,.20);padding:.85rem;
 }
+div[data-testid="stMetric"] label{color:#9f9691!important;}
+div[data-testid="stMetric"] [data-testid="stMetricValue"]{color:#f3eee6!important;}
 .stButton>button{
-    border-radius:11px;border:1px solid #d0e0d8;background:#fff;
-    color:var(--ink);font-weight:700;
+    border-radius:11px;border:1px solid #46383b;background:#211a1c;
+    color:#e9e1d9;font-weight:700;transition:.2s ease;
 }
-.stButton>button:hover{border-color:var(--green);color:var(--green);}
+.stButton>button:hover{border-color:var(--champagne);color:#f0d9a5;background:#292022;}
+div[data-testid="column"] .stButton>button{min-height:2.45rem;}
+.stButton>button[kind="primary"]{
+    background:linear-gradient(135deg,#6e233e,#922f50)!important;border:1px solid #b05a76!important;
+    color:#fff!important;box-shadow:0 8px 20px rgba(123,41,70,.28);
+}
 [data-testid="stForm"]{border:0!important;padding:0!important;}
-.small-note{color:var(--muted);font-size:.75rem;}
-.footer{text-align:center;color:#82938c;font-size:.75rem;padding-top:1rem;}
+[data-testid="stMultiSelect"], [data-testid="stDateInput"]{margin-bottom:.2rem;}
+.stMultiSelect div[data-baseweb="select"]>div,.stDateInput input{
+    background:#191516!important;border-color:#403437!important;color:#eee7df!important;
+}
+.stMultiSelect div[data-baseweb="select"] span{color:#e8ddd5!important;}
+.stCaption,.small-note{color:#8f8783!important;font-size:.73rem;}
+.footer{text-align:center;color:#706866;font-size:.72rem;padding-top:1.25rem;letter-spacing:.05em;}
+
+/* Give Plotly titles breathing room and keep charts inside their cards */
+.plotly-chart-container{margin-top:.15rem;}
+.js-plotly-plot{border:1px solid #342b2d;border-radius:18px;overflow:hidden;background:#1b1718;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -283,7 +299,7 @@ with right:
     )
 
     old=st.session_state.filters
-    with st.form("filters", border=False):
+    with st.form("filter_form", border=False):
         w=st.multiselect("🌦️ Weather",weather_options,default=old["weather"])
         t=st.multiselect("🚦 Traffic",traffic_options,default=old["traffic"])
         v=st.multiselect("🚗 Vehicle",vehicle_options,default=old["vehicle"])
@@ -379,14 +395,18 @@ with center:
 
     def polish(fig,height=520):
         fig.update_layout(
-            template="plotly_white",height=height,
-            paper_bgcolor="rgba(0,0,0,0)",plot_bgcolor="rgba(255,255,255,0)",
-            font=dict(color="#173f34"),margin=dict(l=25,r=25,t=55,b=30),
-            hoverlabel=dict(bgcolor="white"),
-            legend=dict(orientation="h",yanchor="bottom",y=1.02,x=0)
+            template="plotly",height=height,
+            paper_bgcolor="#1b1718",plot_bgcolor="#1b1718",
+            font=dict(color="#eee7df",family="Inter, Arial, sans-serif"),
+            margin=dict(l=42,r=32,t=105,b=42),
+            title=dict(x=0.02,xanchor="left",y=0.98,yanchor="top",font=dict(size=20,color="#f1e9df")),
+            colorway=["#8f3453","#c8aa73","#4f806d","#b9657f","#8d9d92","#a98452"],
+            hoverlabel=dict(bgcolor="#241d1f",font_color="#f3eee6",bordercolor="#594047"),
+            legend=dict(orientation="h",yanchor="bottom",y=1.03,x=0,font=dict(color="#c8bfba")),
+            bargap=.25
         )
-        fig.update_xaxes(showgrid=False,linecolor="#dbe7e0")
-        fig.update_yaxes(gridcolor="#e7efeb",zeroline=False)
+        fig.update_xaxes(showgrid=False,linecolor="#4a3b3e",tickfont=dict(color="#a99f99"),title_font=dict(color="#d7cec7"))
+        fig.update_yaxes(gridcolor="#30282a",zeroline=False,tickfont=dict(color="#a99f99"),title_font=dict(color="#d7cec7"))
         return fig
 
     # ====================== OVERVIEW =========================
@@ -443,7 +463,9 @@ with center:
             fig=px.bar(q,x="Weather",y="Delivery_Time",color="Traffic",barmode="group",
                        text_auto=".1f",labels={"Delivery_Time":"Average delivery time (min)"},
                        title="Average Delivery Time by Weather and Traffic")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             worst=q.loc[q["Delivery_Time"].idxmax()]
             insight(f"The slowest selected combination is <b>{worst['Weather']}</b> weather with "
                     f"<b>{worst['Traffic']}</b> traffic at <b>{worst['Delivery_Time']:.1f} minutes</b>.")
@@ -460,7 +482,9 @@ with center:
             fig=px.bar(q,x="Vehicle",y="Average",text_auto=".1f",hover_data=["Deliveries"],
                        labels={"Average":"Average delivery time (min)","Vehicle":"Vehicle type"},
                        title="Average Delivery Time by Vehicle")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"<b>{q.iloc[0]['Vehicle']}</b> has the shortest selected average at "
                     f"<b>{q.iloc[0]['Average']:.1f} minutes</b>.")
 
@@ -483,7 +507,9 @@ with center:
                            labels={"Agent_Rating":"Agent rating","Delivery_Time":"Delivery time (min)",
                                    "Agent_Age_Group":"Age group"},
                            title="Agent Rating vs Delivery Time")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig,560),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"The rating/delivery-time correlation is <b>{corr:.2f}</b>. "
                     "A value close to zero indicates a weak linear relationship.")
 
@@ -500,7 +526,9 @@ with center:
                        hover_data=["Deliveries"],labels={"Average":"Average delivery time (min)"},
                        title="Average Delivery Time by Area")
             fig.update_layout(yaxis={"categoryorder":"total ascending"})
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig,max(500,35*len(q))),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"<b>{q.iloc[0]['Area']}</b> has the highest selected average delivery time "
                     f"at <b>{q.iloc[0]['Average']:.1f} minutes</b>.")
 
@@ -522,7 +550,9 @@ with center:
             fig=px.box(q,x="Category",y="Delivery_Time",points=False,
                        labels={"Delivery_Time":"Delivery time (min)"},
                        title="Delivery-Time Distribution by Category")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig,560),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"<b>{hi['Category']}</b> has the highest selected average ({hi['mean']:.1f} min), "
                     f"while <b>{var['Category']}</b> has the highest variability (SD {var['std']:.1f} min).")
             with st.expander("View category statistics"):
@@ -543,7 +573,9 @@ with center:
             fig=px.bar(q,x="Time_of_Day",y="Average",text_auto=".1f",hover_data=["Deliveries"],
                        labels={"Average":"Average delivery time (min)","Time_of_Day":"Time of day"},
                        title="Average Delivery Time by Time of Day")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             worst=q.loc[q["Average"].idxmax()]
             insight(f"<b>{worst['Time_of_Day']}</b> has the highest selected average at "
                     f"<b>{worst['Average']:.1f} minutes</b>.")
@@ -564,7 +596,9 @@ with center:
             fig=px.scatter(sample,x="Delivery_Distance",y="Delivery_Time",opacity=.35,
                            trendline="ols",labels={"Delivery_Distance":"Distance (km)",
                            "Delivery_Time":"Delivery time (min)"},title="Distance vs Delivery Time")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig,560),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"The calculated Haversine distance has a correlation of <b>{corr:.2f}</b> "
                     "with delivery time in the current selection.")
 
@@ -584,7 +618,9 @@ with center:
             fig=px.scatter(sample,x="Pickup_Duration",y="Delivery_Time",opacity=.35,
                            trendline="ols",labels={"Pickup_Duration":"Pickup duration (min)",
                            "Delivery_Time":"Delivery time (min)"},title="Pickup Duration vs Delivery Time")
+            st.markdown('<div class="plotly-chart-container">',unsafe_allow_html=True)
             st.plotly_chart(polish(fig,560),use_container_width=True)
+            st.markdown('</div>',unsafe_allow_html=True)
             insight(f"Pickup duration has a correlation of <b>{corr:.2f}</b> with delivery time "
                     "in the current selection.")
 
