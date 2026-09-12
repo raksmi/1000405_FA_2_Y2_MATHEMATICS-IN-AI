@@ -901,12 +901,6 @@ Use a current Python 3 environment.
 
 ## Step 2 --- Clone or download the repository
 
-Example:
-
-``` bash
-git clone YOUR_GITHUB_REPOSITORY_URL
-cd logisight-fa2
-```
 
 ## Step 3 --- Install dependencies
 
@@ -1005,16 +999,6 @@ required by the assessment.
 ------------------------------------------------------------------------
 
 # 25. GitHub Repository
-
-**GitHub Repository:**\
-Replace this section with the final repository URL.
-
-``` text
-PASTE YOUR GITHUB REPOSITORY URL HERE
-```
-
-The repository should be publicly accessible or shared according to the
-school's submission requirements.
 
 ------------------------------------------------------------------------
 
