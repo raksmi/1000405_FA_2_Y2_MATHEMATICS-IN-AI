@@ -132,6 +132,14 @@ div[data-testid="column"] .stButton>button{min-height:2.45rem;}
 .stCaption,.small-note{color:#8f8783!important;font-size:.73rem;}
 .footer{text-align:center;color:#706866;font-size:.72rem;padding-top:1.25rem;letter-spacing:.05em;}
 
+/* Decision intelligence cards */
+.stakeholder-card{min-height:170px;padding:1.05rem 1.1rem;margin-bottom:.9rem;background:linear-gradient(145deg,#211a1c,#191516);border:1px solid #3a3032;border-radius:16px;box-shadow:0 10px 24px rgba(0,0,0,.18);}
+.stakeholder-title{color:#d7c9b7;font-size:1rem;font-weight:900;margin-bottom:.45rem;}
+.stakeholder-text{color:#aaa09a;font-size:.78rem;line-height:1.48;}
+.risk-card{padding:1.35rem 1.2rem;background:linear-gradient(145deg,#2b1d22,#1b1718);border:1px solid #54353e;border-radius:18px;text-align:center;margin:.7rem 0 1rem;}
+.risk-value{font-size:3.1rem;font-weight:950;color:#f3eee6;line-height:1.05;}
+.risk-label{font-size:.68rem;color:#c8aa73;font-weight:900;letter-spacing:.14em;text-transform:uppercase;margin-top:.3rem;}
+.formula{background:#191516;border:1px solid #393033;border-radius:12px;padding:.75rem 1rem;color:#cfc4bb;font-family:monospace;font-size:.82rem;margin:.7rem 0;}
 /* Overview investigation cards */
 .overview-card{
     min-height:118px;
@@ -246,7 +254,8 @@ min_date=df["Order_Date"].min().date()
 max_date=df["Order_Date"].max().date()
 
 PAGES=[
-    "🏠 Overview","🌧️ Delay Analyzer","🚗 Vehicle Comparison",
+    "🏠 Overview","💡 Executive Insights","🎯 Probability & Risk",
+    "🌧️ Delay Analyzer","🚗 Vehicle Comparison",
     "👤 Agent Performance","🗺️ Area Analysis","📦 Category Analysis",
     "🕐 Time-of-Day","📍 Distance Analyzer","⏱️ Pickup Efficiency"
 ]
@@ -301,7 +310,8 @@ if left is not None:
             '<b>2</b> Refine the segment on the right.<br><br>'
             '<b>3</b> Click <b>Apply filters</b>.<br><br>'
             '<b>4</b> Read the before → after impact.<br><br>'
-            '<b>5</b> Use the graph to support a decision.</div>',
+            '<b>5</b> Check probability and risk.<br><br>'
+             '<b>6</b> Use the insight to support a decision.</div>',
             unsafe_allow_html=True
         )
 
@@ -464,6 +474,8 @@ with center:
 
         st.markdown("### What can the manager investigate?")
         cards=[
+            ("💡","Executive Insights","Manager + stakeholder brief"),
+            ("🎯","Probability & Risk","Chance of late delivery"),
             ("🌧️","Delay Analyzer","Weather + traffic"),
             ("🚗","Vehicle Comparison","Vehicle performance"),
             ("👤","Agent Performance","Rating + age"),
@@ -485,6 +497,131 @@ with center:
                     unsafe_allow_html=True
                 )
         st.info("Use the navigation on the left. Filters on the right stay active across every analysis.")
+
+    # ================= EXECUTIVE INSIGHTS ====================
+    elif page=="💡 Executive Insights":
+        header("DECISION INTELLIGENCE","Executive Insights","Turn the selected data into actions for managers and stakeholders")
+        question("What are the most important operational signals in the current selection?")
+
+        if filtered.empty:
+            st.warning("No data matches the current filters.")
+        else:
+            n=len(filtered)
+            avg=filtered["Delivery_Time"].mean()
+            late=filtered["Late_Delivery"].mean()*100
+
+            # Core findings
+            wt=filtered.groupby(["Weather","Traffic"])["Delivery_Time"].mean().reset_index()
+            worst_wt=wt.loc[wt["Delivery_Time"].idxmax()] if len(wt) else None
+            veh=filtered.groupby("Vehicle")["Delivery_Time"].agg(["mean","count"]).reset_index().sort_values("mean")
+            best_vehicle=veh.iloc[0] if len(veh) else None
+            area=filtered.groupby("Area")["Delivery_Time"].agg(["mean","count"]).reset_index().sort_values("mean",ascending=False)
+            worst_area=area.iloc[0] if len(area) else None
+            cat=filtered.groupby("Category")["Late_Delivery"].agg(["mean","count"]).reset_index().sort_values("mean",ascending=False)
+            worst_cat=cat.iloc[0] if len(cat) else None
+            q=filtered.dropna(subset=["Agent_Rating","Delivery_Time"])
+            rating_corr=q["Agent_Rating"].corr(q["Delivery_Time"]) if len(q)>1 else np.nan
+
+            a,b,c,d=st.columns(4)
+            a.metric("Selected deliveries",f"{n:,}")
+            b.metric("Average delivery",f"{avg:.1f} min")
+            c.metric("Late delivery rate",f"{late:.1f}%")
+            d.metric("Late threshold",f"{late_threshold:.1f} min")
+
+            st.markdown("### What the data is saying")
+            findings=[]
+            if worst_wt is not None:
+                findings.append(f"The slowest weather–traffic combination is <b>{worst_wt['Weather']}</b> + <b>{worst_wt['Traffic']}</b>, averaging <b>{worst_wt['Delivery_Time']:.1f} min</b>.")
+            if best_vehicle is not None:
+                findings.append(f"<b>{best_vehicle['Vehicle']}</b> has the fastest selected vehicle average at <b>{best_vehicle['mean']:.1f} min</b> across {int(best_vehicle['count']):,} deliveries.")
+            if worst_area is not None:
+                findings.append(f"<b>{worst_area['Area']}</b> is the slowest selected area at <b>{worst_area['mean']:.1f} min</b>; it may deserve a bottleneck review.")
+            if worst_cat is not None:
+                findings.append(f"<b>{worst_cat['Category']}</b> has the highest selected late-delivery rate at <b>{worst_cat['mean']*100:.1f}%</b> among {int(worst_cat['count']):,} deliveries.")
+            if pd.notna(rating_corr):
+                direction="negative" if rating_corr<0 else "positive" if rating_corr>0 else "near-zero"
+                findings.append(f"Agent rating has a <b>{direction}</b> linear correlation with delivery time of <b>{rating_corr:.2f}</b>; this should be treated as association, not proof of causation.")
+
+            for i,text in enumerate(findings[:5],1):
+                st.markdown(f'<div class="insight"><b>Finding {i}</b><br>{text}</div>',unsafe_allow_html=True)
+
+            st.markdown("### Stakeholder notes")
+            cols=st.columns(3)
+            notes=[
+                ("👔 Manager","Prioritise the slowest weather–traffic combinations and highest-delay areas. Use the filters to test whether the pattern remains when the analysis is narrowed to a specific vehicle, category or date range."),
+                ("⚙️ Operations","Use the fastest vehicle group as a comparison benchmark, then investigate pickup duration, distance and time-of-day on the corresponding pages. The dashboard supports investigation rather than claiming a single cause."),
+                ("📈 Investor / Stakeholder","The strongest signal is operational consistency: repeatable monitoring of delay rate, delivery time and risk can support scalable decision-making. Treat these historical results as evidence for further investigation, not as financial forecasts."),
+            ]
+            for col,(title,text) in zip(cols,notes):
+                with col:
+                    st.markdown(f'<div class="stakeholder-card"><div class="stakeholder-title">{title}</div><div class="stakeholder-text">{text}</div></div>',unsafe_allow_html=True)
+
+            st.markdown("### Recommended next actions")
+            actions=[]
+            if worst_wt is not None: actions.append(f"Review staffing/fleet readiness for {worst_wt['Weather']} weather + {worst_wt['Traffic']} traffic.")
+            if worst_area is not None: actions.append(f"Investigate the operational bottlenecks behind {worst_area['Area']}.")
+            if worst_cat is not None: actions.append(f"Check whether {worst_cat['Category']} orders need a different handling or dispatch process.")
+            actions.append("Use Probability & Risk to estimate historical late-delivery likelihood for a chosen operating scenario.")
+            for act in actions:
+                st.markdown(f"- {act}")
+
+    # ================= PROBABILITY & RISK ====================
+    elif page=="🎯 Probability & Risk":
+        header("PROBABILITY","Delivery Risk Analyzer","Estimate historical late-delivery probability for a selected operating scenario")
+        question("Given these conditions, how likely was a delivery to be late in the historical dataset?")
+
+        st.markdown('<div class="formula">P(Late | conditions) = number of late deliveries under the selected conditions ÷ total deliveries under the selected conditions</div>',unsafe_allow_html=True)
+        st.caption("This is an empirical probability from the dataset, not a machine-learning prediction. Late is defined using the dashboard's mean + 1 standard deviation threshold.")
+
+        pc1,pc2,pc3=st.columns(3)
+        with pc1:
+            pw=st.selectbox("Weather scenario",["Any"]+weather_options,key="prob_weather")
+            pt=st.selectbox("Traffic scenario",["Any"]+traffic_options,key="prob_traffic")
+        with pc2:
+            pv=st.selectbox("Vehicle scenario",["Any"]+vehicle_options,key="prob_vehicle")
+            pa=st.selectbox("Area scenario",["Any"]+area_options,key="prob_area")
+        with pc3:
+            pcat=st.selectbox("Category scenario",["Any"]+category_options,key="prob_category")
+            st.caption("The scenario selectors are independent of the right-side dashboard filters.")
+
+        scenario=df.copy()
+        if pw!="Any": scenario=scenario[scenario["Weather"]==pw]
+        if pt!="Any": scenario=scenario[scenario["Traffic"]==pt]
+        if pv!="Any": scenario=scenario[scenario["Vehicle"]==pv]
+        if pa!="Any": scenario=scenario[scenario["Area"]==pa]
+        if pcat!="Any": scenario=scenario[scenario["Category"]==pcat]
+
+        if scenario.empty:
+            st.warning("No historical deliveries match this scenario. Try a broader combination.")
+        else:
+            probability=scenario["Late_Delivery"].mean()*100
+            late_n=int(scenario["Late_Delivery"].sum())
+            total_n=len(scenario)
+            risk="HIGH" if probability>=60 else "MODERATE" if probability>=30 else "LOW"
+            r1,r2,r3=st.columns([1.35,1,1])
+            with r1:
+                st.markdown(f'<div class="risk-card"><div class="risk-value">{probability:.1f}%</div><div class="risk-label">Historical probability of late delivery · {risk} risk</div></div>',unsafe_allow_html=True)
+            r2.metric("Comparable deliveries",f"{total_n:,}")
+            r3.metric("Late deliveries",f"{late_n:,}")
+
+            # show on-time vs late probability
+            probs=pd.DataFrame({"Outcome":["On time","Late"],"Probability":[100-probability,probability]})
+            fig=px.bar(probs,x="Outcome",y="Probability",text_auto=".1f",labels={"Probability":"Historical probability (%)"},title="Historical Outcome Probability")
+            st.plotly_chart(polish(fig,460),use_container_width=True)
+
+            st.markdown("### How to read this")
+            st.markdown(f'<div class="insight">In the historical data, <b>{late_n:,} of {total_n:,}</b> comparable deliveries were classified as late. That gives an empirical late-delivery probability of <b>{probability:.1f}%</b> for this scenario. The result becomes more informative when the comparable-delivery count is large enough to support a stable comparison.</div>',unsafe_allow_html=True)
+
+            # Factor risk table within current scenario
+            st.markdown("### Risk by operating factor")
+            risk_rows=[]
+            for col,label in [("Weather","Weather"),("Traffic","Traffic"),("Vehicle","Vehicle"),("Area","Area"),("Category","Category")]:
+                tmp=scenario.groupby(col)["Late_Delivery"].agg(["mean","count"]).reset_index()
+                for _,row in tmp.sort_values("mean",ascending=False).head(3).iterrows():
+                    risk_rows.append({"Factor":label,"Condition":row[col],"Late probability (%)":row["mean"]*100,"Deliveries":int(row["count"])})
+            if risk_rows:
+                rt=pd.DataFrame(risk_rows).sort_values("Late probability (%)",ascending=False)
+                st.dataframe(rt,use_container_width=True,hide_index=True)
 
     # ======================= Q1 ==============================
     elif page=="🌧️ Delay Analyzer":
@@ -658,4 +795,4 @@ with center:
             insight(f"Pickup duration has a correlation of <b>{corr:.2f}</b> with delivery time "
                     "in the current selection.")
 
-    st.markdown('<div class="footer">LOGISIGHT • Same data. Smarter decisions. • FA-2</div>',unsafe_allow_html=True)
+    st.markdown('<div class="footer">LOGISIGHT • Evidence → Probability → Decision • FA-2</div>',unsafe_allow_html=True)
