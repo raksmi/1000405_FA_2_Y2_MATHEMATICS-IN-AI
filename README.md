@@ -888,19 +888,6 @@ into a working Streamlit interface.
 
 The dashboard supports an optional mascot image.
 
-Accepted locations include:
-
-``` text
-mascot.png
-mascot.jpg
-mascot.webp
-assets/mascot.png
-assets/mascot.webp
-```
-
-If no mascot image is found, the dashboard continues to function and
-displays a small instruction indicating where the mascot can be added.
-
 The mascot is intended as a visual brand element rather than an
 analytical feature.
 
