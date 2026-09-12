@@ -88,21 +88,37 @@ columns**.
   Field               Purpose
   ------------------- -----------------------------------
   `Order_ID`          Unique order identifier
+  
   `Agent_Age`         Age of the delivery agent
+  
   `Agent_Rating`      Delivery-agent rating
+  
   `Store_Latitude`    Store latitude
+  
   `Store_Longitude`   Store longitude
+  
   `Drop_Latitude`     Delivery/drop latitude
+  
   `Drop_Longitude`    Delivery/drop longitude
+  
   `Order_Date`        Date of the order
+  
   `Order_Time`        Time when the order was placed
+  
   `Pickup_Time`       Time when the order was picked up
+  
   `Weather`           Weather condition
+  
   `Traffic`           Traffic condition
+  
   `Vehicle`           Vehicle type
+  
   `Area`              Delivery area
+  
   `Delivery_Time`     Overall delivery time
+  
   `Category`          Product category
+  
 
 The dataset is used as the source for all dashboard calculations and
 visualizations.
@@ -143,20 +159,6 @@ relationship analysis.
 
 # 5. Project Structure
 
-Recommended repository structure:
-
-``` text
-logisight-fa2/
-│
-├── app.py
-├── requirements.txt
-├── README.md
-├── Last mile Delivery Data.csv
-│
-└── assets/
-    └── mascot.png
-```
-
 ### File descriptions
 
 #### `app.py`
@@ -184,9 +186,9 @@ Contains the Python libraries required to run the application.
 
 The source dataset used by the dashboard.
 
-#### `assets/mascot.png`
+#### `mascot.png`
 
-Optional LogiSight mascot image displayed in the dashboard.
+LogiSight mascot image displayed in the dashboard.
 
 ------------------------------------------------------------------------
 
@@ -203,9 +205,6 @@ applied every time the dashboard runs.
 Column names are stripped of leading and trailing spaces to avoid errors
 caused by inconsistent formatting.
 
-``` python
-df.columns = df.columns.str.strip()
-```
 
 ------------------------------------------------------------------------
 
