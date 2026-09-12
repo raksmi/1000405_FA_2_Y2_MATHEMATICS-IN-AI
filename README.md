@@ -885,7 +885,6 @@ The application will open in the browser.
 
 The project is intended to be hosted in a GitHub repository.
 
-The repository should contain at minimum:
 
 ``` text
 app.py
@@ -894,18 +893,10 @@ Last mile Delivery Data.csv
 README.md
 ```
 
-The mascot can be stored in:
+The mascot is stored in:
 
 ``` text
-assets/mascot.png
-```
-
-### Recommended Git workflow
-
-``` bash
-git add .
-git commit -m "Final LogiSight FA-2 dashboard"
-git push
+mascot.png
 ```
 
 ------------------------------------------------------------------------
@@ -1333,23 +1324,4 @@ deployment.
 
 ------------------------------------------------------------------------
 
-## Final Submission Checklist
 
-Before submitting the project, verify:
-
--   [ ] `app.py` is present
--   [ ] `requirements.txt` is present
--   [ ] `Last mile Delivery Data.csv` is included
--   [ ] README is included
--   [ ] All five compulsory visualizations work
--   [ ] Filters work correctly
--   [ ] KPIs update with filters
--   [ ] Reset Filters works
--   [ ] Derived variables are calculated correctly
--   [ ] No missing-data errors prevent the dashboard from running
--   [ ] GitHub repository is accessible
--   [ ] Streamlit Cloud deployment is working
--   [ ] Public Streamlit URL is copied into the submission document
--   [ ] GitHub URL is copied into the submission document
--   [ ] Final dashboard matches the FA-1 storyboard
--   [ ] Final dashboard is tested before submission
