@@ -1,4 +1,4 @@
-# LOGISIGHT --- Last-Mile Delivery Intelligence
+# LOGISIGHT Last-Mile Delivery Intelligence
 
 ## FA-2: Dashboarding and Deployment
 
